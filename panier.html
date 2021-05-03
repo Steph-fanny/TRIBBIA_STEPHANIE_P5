@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content ="Orinoco est un site de vente en ligne de caméras anciennes, d'ours en peluche et de meuble en bois">
+
+   
+    <!--bootstrap-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" 
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" 
+    crossorigin="anonymous"> 
+
+    <title>Votre panier </title>
+</head>
+
+<body class="container">
+    <header class="bg-light ">
+        <div class="container">
+            <div class="row">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light w-100 ">
+                    <img src="images/orinoco-logo.png" width="180" height="90" class="rounded float-left" alt="image du logo ORINOCO"/>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                  
+                    <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
+                      <ul class="navbar-nav ">                        
+                        <li class="nav-item active">
+                          <a class="nav-link py-3" href="index.html">Accueil <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link px-4" href="#">Panier<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-cart-dash pl-2" viewBox="0 0 16 16">
+                            <path d="M6.5 7a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4z"/>
+                            <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                          </svg></li></a>
+                        </li>                                                                       
+                    </div>
+                  </nav>
+            </div>    
+        </div>
+    </header>
+
+    <main>
+        <main>
+            <section class="recapitulatif">
+                <div id="panier-recap">
+                    <p id="panierVide">Votre panier est vide</p>
+                  </div>
+                <div class="row">
+                    <div class="col px-0">
+                        <div class="jumbotron text-center py-3 mt-3 w-100">
+                            <h2>Récapitulatif de votre commande</h2>                               
+                        </div>                
+                    </div>
+
+                       
+
+            </section> <!--avec bootstrap--> 
+            <section class="formulaire_commande">
+                <form>
+                    <div class="row">
+                      <div class="col">
+                        <input type="text" class="form-control" placeholder="Nom de Famille">
+                      </div>
+                      <div class="col">
+                        <input type="text" class="form-control" placeholder="Prénom" placeholder="Renseignez votre prénom">
+                      </div>
+                    </div>
+                  </form>
+
+                  <!--steph-->
+                <div class="formulaire">
+                 <form method="post" action="">                                                                       
+                  <div class="form-group">
+                    <!--renseigner l'action pour utilisateur-->
+                    <label for="email">Adresse email</label>
+                    <!--label = id pour mettre curseur dans bonne case--> 
+                    <input type="email" id="email" name="email"
+                      class="form-control"
+                      required placeholder="Entrez une adresse mail valide"/>
+                      <!-- navigateurs qui ne prennent pas en compte format, rajouter format attendu-->
+                  </div>
+
+                  <div class="form-group">
+                    <label for="adresse">Adresse postale et de facturation</label>
+                    <input type="text" id="adresse" name="adresse"
+                      class="form-control"
+                      required placeholder="numéro, nom de la rue"/>
+                  </div>
+    
+                  <div class="row">
+                    <div class="col">
+                      <input type="text" class="form-control" placeholder="Ville" required>
+                    </div>
+                    <div class="col">
+                      <input type="text" class="form-control" placeholder="code postal" required>
+                    </div>
+                  </div>
+
+                  
+                    
+                      
+                      
+                  
+
+                  <h3>Veuillez vérifier votre commande avant de valider le
+                    paiement</h3>
+                  <div class="form-group">
+                    <label>Choix du moyen de paiement</label>
+                    <div id="carte">
+                      <input type="radio" class="paiement" name="identifieur"
+                        value="Visa"checked />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-credit-card" viewBox="0 0 16 16">
+                          <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z"/>
+                          <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"/>
+                        </svg>
+                      <input type="radio" class="paiement" name="identifieur"
+                      value="Mastercard"checked /><i class="fab fa-cc-mastercard fa-2x"></i>                                                 
+                      <input type="radio" class="paiement" name="identifieur"
+                      value="Paypal"checked /><i class="fab fa-cc-paypal fa-2x"></i>                                           
+                    </div>
+                  </div>
+    
+                  <button id="commander" type="submit" name="commander">
+                    Commander
+                  </button>
+                </form>
+              </div>
+            </section>
+          </main>
+    
+
+
+    
