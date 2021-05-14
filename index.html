@@ -5,22 +5,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content ="Orinoco est un site de vente en ligne de caméras anciennes, d'ours en peluche et de meuble en bois">
-
-   
+       
     <!--bootstrap-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" 
     integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" 
     crossorigin="anonymous"> 
+
+    <link rel="stylesheet" href="style.css"/>
 
     <title>Page  d'accueil Orinoco </title>
 </head>
 
 
 
-<body class="container">
-    <header class="bg-light ">
-        <div class="container">
-            <div class="row">
+<body class="container   ">
+    <header >
+        <div class="container  ">
+            <div class="row ">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light w-100 ">
                     <img src="images/orinoco-logo.png" width="180" height="90" class="rounded float-left" alt="image du logo ORINOCO"/>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,7 +34,7 @@
                           <a class="nav-link py-3" href="#">Accueil <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link px-4" href="#">Panier<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-cart-dash pl-2" viewBox="0 0 16 16">
+                          <a class="nav-link pl-0 px-lg-4" href="panier.html">Panier<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-cart-dash pl-2" viewBox="0 0 16 16">
                             <path d="M6.5 7a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4z"/>
                             <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
                           </svg></li></a>
@@ -45,27 +46,29 @@
     </header>
 
 
-    <main id="main" class=" main container" >
+    <main id="main" class=" main container px-0 " >
         <div class="row">
-            <div class="col px-0">
-                <div class="jumbotron text-center py-3 mt-3 w-100">
+            <div class="col ">
+                <div class="jumbotron text-center px-0 py-3  mt-3 w-100">
                     <h1>Notre selection d'ours en peluche fait à la main</h1>    
                 </div>                
             </div>
         </div>
-        <!--1 ere  ligne-->
-        <div class="row">
-            <div class ="col-12 col-lg-6">
-                <!--1 ere carte-->
-                <template id="templateArticle">
-                    <article class="card"> 
-                        <img class="card_img" src="" alt="image de l'ours"/>
-                        <a href= "" class="card_link">lien</a>            
-                        <h2 class="card_title">nom ours</h2> 
-                            <p class="card_price">price</p>                                              
-                    </article>  
-                </template>                      
-            </div>
+        <div id="row_articles" class="row py-0 mx-0 justify-content-center" >    
+            <template id ="templateArticle">
+                              
+                <!--carte-->             
+                <article class="card col-12 col-md-6 col-lg-4  shadow rounded-lg my-3 mx-3 py-2 px-2 "> 
+                    <a href="ourson.html" id="card_link" class="card_lien"></a>
+                    <img id="card_img" src=""
+                        alt="image de l'ours"/>                                      
+                    <h2 id="card_title" class="mx-auto">nom ours</h2> 
+                    <p id="card_price" class="mx-auto"> price</p>                                              
+                </article>                                       
+               
+            </template>  
+        </div>   
+              
                           
     </main>
 
@@ -73,7 +76,7 @@
     <footer class ="container bg-dark py-3   d-flex ">
             <div class="row w-100" >
                 <div class ="col-6 col-md-12 col  d-flex justify-content-md-center  w-100">
-                    <ul class="list-inline text-left my-0 ">
+                    <ul class="list-inline text-left text-md-center my-0 ">
                         <li class="list-inline-item px-4 py-3"><a class="py-3 px-2 h-100 W-auto" href="#">A propos</a></li>
                         <li class="list-inline-item px-4"><a href="#">Données et confidentialité</a></li>
                         <li class="list-inline-item px-4"><a href="#">Mentions légales</a></li>

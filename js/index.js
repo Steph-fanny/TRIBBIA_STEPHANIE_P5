@@ -13,24 +13,21 @@
     }
 } )()
 
-function getArticles(){       
-    return fetch("http://localhost:3000/api/teddies") /*url ou l'on va chercher l'information)*/
-    .then(function(res){         /*executer quand il aura récupéré les données)*/
-       if(res.ok) {        
-        return res.json();
-        
-        }  
-    })       
-      
+function getArticles(){   
+    /*url ou l'on va chercher l'information)*/    
+    return fetch("http://localhost:3000/api/teddies") 
+        /*executer quand il aura récupéré les données)*/
+    .then(function(res){         
+            if(res.ok) {        
+                return res.json();
+            }  
+        })       
     .then(function(articles) {
-        return articles  
-    })
-
+            return articles  
+        })
     .catch(function(error){ 
-        alert(error)              /*une erreur est survenue*/
-
-    })
-                   
+            alert(error)              /*une erreur est survenue*/
+        })               
 }
 
 
@@ -39,17 +36,17 @@ function displayArticle(article){
     // console.log("article:")  
     // console.log(article)  
 
-    let templateElt = document.getElementsById("templateArticle")
+    let templateElt = document.getElementById("templateArticle")
     let cloneElt = document.importNode(templateElt.content, true)
     // console.log(cloneElt);
    
-    cloneElt.getElementsClassName("card_title").textContent = article.name;   
-    cloneElt.getElementsByClassName("card_price").textContent = article.price;   
-    cloneElt.getElementsByClassName("card_img").innerHTLM = article.img;
-    cloneElt.getElementsByClassName("card_link").setAttribute("href", "ourson.html?id="+article._id);
+    cloneElt.getElementById("card_title").textContent = article.name;   
+    cloneElt.getElementById("card_price").textContent = article.price +" euros";   
+    cloneElt.getElementById("card_img").src = article.imageUrl;
+    cloneElt.getElementById("card_link").setAttribute("href", "ourson.html?id="+article._id);
 
     console.log(cloneElt);
 
-    document.getElementsByClassName("main").appendChild(cloneElt)
-
+    document.getElementById("row_articles").appendChild(cloneElt)
 }
+
