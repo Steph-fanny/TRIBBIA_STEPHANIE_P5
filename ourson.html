@@ -45,24 +45,24 @@
     </header>
 
         <section id="descriptionProduit" class="my-3">      
-            <article class="container_page_produit d-flex flex-column align-items-center"> 
+            <article class="container_page_produit  d-flex flex-column align-items-center"> 
                 <!-- <a href="ourson.html" id="card_link" class="card_lien"></a> -->
                 <img id="product_img" width="550" height="350" 
                  src="" alt="image de l'ours"/>                            
                     <h2 id= "product_title" class="my-3">nom ours</h2>
-                    <p id="product_description">description produit</p>
-                    <!-- <p id="product_color">Choisissez votre couleur:</p>   -->
+                    <p id="product_description">description produit</p>                    
                     
+                    <!-- <template id="productColor"> -->
                     <form class="form-inline">
                         <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Choisissez votre couleur</label>
-                        <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-                          <!-- <option selected>Couleur...</option> --> -->
+                        <select class="custom-select my-1 mr-sm-2" id="product_color_choice">
+                          <!-- <option selected>Couleur...</option> --> 
                           <option value id ="first_color"></option>
                           <option value id ="second_color"></option>
                           <option value id ="third_color"></option> 
                           <option value id ="fourth_color"></option>                                                   
-                        </select> 
-                    
+                        </select>  
+                
                         <!-- <form class="form-inline">
                         <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Choisissez votre couleur</label>
                         <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
@@ -70,6 +70,7 @@
                         <option value id ="product_color"></option>
                                                                           
                         </select>  -->
+                         <!-- </template> -->
 
                         
                     <form action="" methode="post">
@@ -83,7 +84,7 @@
                     </form>                                
 
                     <p id= "product_price">price</p>   
-                    <a class="btn btn-primary" href="panier.html" role="button">Ajouter au panier</a>
+                    <a class="btn btn-primary"id="bouton" href="panier.html" role="button">Ajouter au panier</a>
                       
                     
 

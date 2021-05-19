@@ -1,0 +1,15 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        
+        {
+            "type": "pwa-chrome",
+            "request": "launch",
+            "name": "Open ourson.html",
+            "file": "c:\\Users\\steph\\OneDrive\\Bureau\\FORMATION WEB\\OPEN CLASS ROOM\\FORMATION DEVELOPPEUR WEB\\PROJET\\P5 NEW\\ourson.html"
+        }
+    ]
+}

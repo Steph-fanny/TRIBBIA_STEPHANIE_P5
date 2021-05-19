@@ -1,23 +1,23 @@
-// ajouter les produits du panier
-function AddProductBasket(
-    container,
-    productInfo,
-    productBasket,
-    basketContent,
-    totalPrice
-){
+
+
+
+  
+    
+
+      //récupérer les donnnées apres avoir appeler le local storage:
+    // JSON.parse: prend le string et le transforme en objet
+      const recuperationPanier = JSON.parse(localStorage.getItem("teddyChoice"));
+      if (recuperationPanier!=null) //si la clef existe...
+          document.getElementById("article_name").textContent = recuperationPanier.nom;            
+
+ 
 
 
 
 
-
-const productContainer = document.createElement ('div')
-productContainer.setAttribute("class, row justify-content-around mb-5");
-
-const productTitle = document.createElement ('div')
-productTitle.setAttribute("class, col-md-3");
-
-const productName = document.createElement ('div')
-productName.innerHTML = productInfo.productName;
-
-}
+    // Supprimer les éléments du panier :
+    button_clear.onclick= ()=>{
+        localStorage.clear();
+        // recharger la page aprés click bouton
+        document.location.reload();
+    }

@@ -5,9 +5,13 @@
     background-color: rgb(204, 243, 239);
 }
 
- .bg-light{    
-    background-color:#343a40!important;
-    } 
+ .navbar{    
+    background-color:#4a5055!important;
+    }  
+
+.nav-link {
+    color: #007bff !important;
+}    
 .jumbotron{
     background-color:white!important;
 }
