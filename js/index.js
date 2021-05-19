@@ -31,7 +31,7 @@ function getArticles(){
 }
 
 
-/*affiche de tous les articles*/
+/*affichage de tous les articles*/
 function displayArticle(article){
     // console.log("article:")  
     // console.log(article)  

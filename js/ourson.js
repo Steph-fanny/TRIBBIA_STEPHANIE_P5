@@ -32,40 +32,58 @@ let address = url.searchParams.get("address");
                 document.getElementById("product_price").textContent ="Prix : "+ product.price +" euros";
                 document.getElementById("product_title").textContent = product.name;
                 
-                // 1. Choix des couleurs               
-                const firstColor = document.getElementById("first_color");
-                firstColor.innerText = product.colors[0]
+                // 1. Choix des couleurs        
+                let colors = product.colors
+                console.log(colors) //=>affiche bien le choix de couleur
 
-                const secondColor = document.getElementById("second_color");
-                secondColor.innerText = product.colors[1]
-                    
-                const thirdColor = document.getElementById("third_color");
-                thirdColor.innerText = product.colors[2]
-
-                const fourthColor = document.getElementById("fourth_color");
-                fourthColor.innerText = product.colors[3]
-            
+                if (product_color_choice!= null){                     
                
+                    const firstColor = document.getElementById("first_color");
+                    firstColor.textContent = product.colors[0]
 
-                // 2 eme essais couleurs
-                // document.getElementById("product_color").innerText = product.colors
-                // console.log(product_color)
-            
-                // 3 eme essai colours            
+                    const secondColor = document.getElementById("second_color");
+                    secondColor.innerText = product.colors[1]
+                        
+                    const thirdColor = document.getElementById("third_color");
+                    thirdColor.innerText = product.colors[2]
+                    
+                    const fourthColor = document.getElementById("fourth_color");                
+                    fourthColor.innerText = product.colors[3]
+                }
+                
+                else
+                {product.colors.style.display = ''}                  
+                console.log(product.color) //=>undefined
+                
+                         
+               
+            })
+                                               
+
+                           
+                // 2 eme essai colours            
                     // let colorsElt = document.getElementById("productcolors");
 
                     //afficher toutes les couleurs
                     // product.colors.forEach((colors) =>  {                    
                     // let templateElt = document.getElementById('productColor')
                     // let cloneElt = document.importNode(templateElt.content, true) 
-            })                                        
-                                                         
+
+                //3 eme essai couleurs: fonctionne mais affiche les couleurs les unes a cotes des autres
+                
+                // let colors= product.colors
+                // console.log(colors)
+                // for (let i = 0; i < colors.length; i++) {
+                // document.getElementById("product_color").textContent = product.colors; 
+                // }    
+               
+                                                                 
             .catch(function(error){ 
                 alert(error)              
             })   
 
-        }
-      
+    }
+                  
         // Validation du panier au click//
             bouton.onclick = () => {
                 // création objet//
