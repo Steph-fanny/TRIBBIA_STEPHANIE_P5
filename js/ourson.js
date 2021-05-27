@@ -29,74 +29,89 @@ let address = url.searchParams.get("address");
                 const img = document.getElementById("product_img");
                     img.src = product.imageUrl;                    
                 document.getElementById("product_description").textContent = product.description;               
-                document.getElementById("product_price").textContent ="Prix : "+ product.price +" euros";
+                document.getElementById("product_price").textContent = product.price
                 document.getElementById("product_title").textContent = product.name;
                 
                 // 1. Choix des couleurs        
                 let colors = product.colors
-                console.log(colors) //=>affiche bien le choix de couleur
+                // console.log(colors) //=>affiche bien le choix de couleur
 
-                if (product_color_choice!= null){                     
-               
-                    const firstColor = document.getElementById("first_color");
-                    firstColor.textContent = product.colors[0]
-
-                    const secondColor = document.getElementById("second_color");
-                    secondColor.innerText = product.colors[1]
-                        
-                    const thirdColor = document.getElementById("third_color");
-                    thirdColor.innerText = product.colors[2]
-                    
-                    const fourthColor = document.getElementById("fourth_color");                
-                    fourthColor.innerText = product.colors[3]
-                }
-                
-                else
-                {product.colors.style.display = ''}                  
-                console.log(product.color) //=>undefined
-                
-                         
-               
+                for (let i = 0; i < colors.length; i++) {
+                  // parcourir le tableau des couleurs
+                  let option_elt = document.createElement("option"); // création d'1 element option
+                  option_elt.textContent = product.colors[i]; // ajout du contenu dans l'element 'option'
+                  // attache de l'option au "parent"= select
+                  document.getElementById("product_color_select").appendChild(option_elt);
+                }         
             })
                                                
-
                            
-                // 2 eme essai colours            
-                    // let colorsElt = document.getElementById("productcolors");
-
-                    //afficher toutes les couleurs
-                    // product.colors.forEach((colors) =>  {                    
-                    // let templateElt = document.getElementById('productColor')
-                    // let cloneElt = document.importNode(templateElt.content, true) 
-
-                //3 eme essai couleurs: fonctionne mais affiche les couleurs les unes a cotes des autres
-                
-                // let colors= product.colors
-                // console.log(colors)
-                // for (let i = 0; i < colors.length; i++) {
-                // document.getElementById("product_color").textContent = product.colors; 
-                // }    
-               
-                                                                 
+                                                                
             .catch(function(error){ 
                 alert(error)              
             })   
 
     }
                   
-        // Validation du panier au click//
-            bouton.onclick = () => {
-                // création objet//
-                const teddyChoice = {
-                    nom: product_title.textContent,                   
-                    prix: product_price.textContent ,
-                    quantité: qt.value,
-                    colors : product_color_choice.value,                    
-                }
-                
-                // transforme objet en string et enregiste dans le cache
-                localStorage.setItem ("choice",JSON.stringify(teddyChoice));
-                document.location.reload();              
-            }         
+// Validation du panier au click//
+    bouton.onclick = () => {    
+  // création objet//
+  teddyChoice = {
+    id: ourson_id,
+    nom: product_title.textContent,
+    prix: product_price.textContent,
+    quantité: qt.value,
+    colors: product_color_select.value,
+  };
+//   window.alert("Produit ajouté au panier");
 
-       
+  //----------------LOCAL STORAGE (LS)-----------------------//
+  // stocker les valeurs du choix de l'ourson dans le local storage
+  // les données ne sont pas perdues aprés fermeture du navigateur
+
+  //1. déclaration variable "produitSaveLocalStorage" : key et values qui sont dans le LS
+        // retourne la valeur associée à 1 clientInformation, à ce stade, il n y a rien
+  let produitSaveLocalStorage = JSON.parse(localStorage.getItem("panier"));
+  // JSON.parse : convertir donnes du LS du format json en objet JS
+  console.log(produitSaveLocalStorage);
+
+
+ //----------- fonction fenêtre pop up------------------//
+ let popupconfirmation = () => {
+    if (window.confirm ( `nom: ${product_title.textContent} colors: ${product_color_select.value}
+        a bien été ajouté au panier 
+        Consulter le panier Ok ou revenir à l'accueil ANNULER`)){        
+        window.location.href = "panier.html";
+    }else{
+        window.location.href = "index.html";
+    }   
+ }
+
+//-------------fonction ajouter un produit selectionné dans le LS----//
+let addProductLs = () => {
+    //mettre dans le tableau les valeurs de teddychoice choisi par l'utilisateur
+    produitSaveLocalStorage.push(teddyChoice);
+    // transforme l'objet en chaine de caractére et envoie dans la clef "panier"
+    localStorage.setItem("panier", JSON.stringify(produitSaveLocalStorage));
+};
+
+  //2. vérifier s'il y a déja des produits enregistré dans le LS:
+  //si valeur = null ou '' => false)
+  // la valeur (clef) dans le else a été créer => le if devient true
+  if (produitSaveLocalStorage) {
+    // s'il n'y a pas de produit déja enregistré
+    // sinon ajout d'1 nouveau produit des que le 1 er est enregistré (else)
+    addProductLs();   
+    //allez sur le panier ou continuer achat
+    popupconfirmation();
+
+  } else {
+    produitSaveLocalStorage = [];    
+    addProductLs();         
+    console.log(produitSaveLocalStorage);
+    popupconfirmation();
+  }
+
+             
+  // localStorage.setItem ("panier",JSON.stringify(teddyChoice));
+}
