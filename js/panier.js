@@ -54,18 +54,6 @@
 
 
 
-        //   //ajouter au tableau en vérifiant que le tableau n'est pas vide
-        //   if (TeddieAdd!==""){
-        //     panier.push(TeddieAdd);
-
-        
-        //     }else{
-        //       let totalPrice = 0;
-      })
-
-  // })
-    // panier[panier.lenght]= "another product"; //OU
-// panier.push("another product")
 
 
 
