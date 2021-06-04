@@ -16,12 +16,12 @@
     <title>Description ourson  </title>
 </head>
 
-<body class="container   ">
+<body class="container">
     <header class="bg-light ">
-        <div class="container  ">
+        <div class="container px-0  ">
             <div class="row ">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light w-100 ">
-                    <img src="images/orinoco-logo.png" width="180" height="90" class="rounded float-left" alt="image du logo ORINOCO"/>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light w-100 px-0">
+                    <img src="images/orinoco-logo.png" width="180" height="90" class="rounded float-left pl-2" alt="image du logo ORINOCO"/>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                       <span class="navbar-toggler-icon"></span>
                     </button>
@@ -44,136 +44,122 @@
     </header>
 
     <main>
-        <main>
-            <section class="recapitulatif">
-                <div id="panier-recap">               
-                  <div class="row">
-                    <div class="col px-0 recapitulatif_commande">                      
-                        <div class="jumbotron text-center py-3 mt-3 w-100">                            
-                            <h2>Récapitulatif de votre commande</h2>                               
-                        </div>                
-                    </div>
+      <section class="recapitulatif">
+        <div id="panier-recap">               
+            <div class="row">
+              <div class="col px-0 recapitulatif_commande">                      
+                  <div class="jumbotron text-center py-3 mt-3 w-100">                            
+                    <h2>Récapitulatif de votre commande</h2>                               
+                  </div>                
+               </div>
 
-            <!--panier-->  
-            
-            <table class="table">
-              <thead>               
-                    <tr id ="row_article_panier">
-                      <th id ="article_title">Article</th>
-                      <th id ="article_price">Prix</th>
-                      <th id ="article_qte">Quantité</th>
-                      <th id = "article_color">Couleur</th>
-                      <th>Total</th>
-                  </tr>
-                </thead>
+      <!--panier-->              
+        <table class="table ">
+          <!--entete du panier-->  
+          <thead>               
+            <tr id ="row_article_panier">
+              <th id ="article_title">Article</th>
+              <th id ="article_price">Prix</th>
+              <th id ="article_qte">Quantité</th>
+              <th id = "article_color">Couleur</th>
+              <th>Total</th>
+            </tr>
+          </thead>
 
-              <!-- tableau av liste des produits -->
-                <tbody id ="liste_produit_panier">
-                    
-                 
-                      <!-- <th><a href="index.html"><button> Ajouter un produit</button></a></th>
-                   <th><button id="button_clear">supprimer</button></th> 
-                  
-               -->
-              </tbody>
-                 
-            </table>                         
+          <!-- tableau av liste des produits -->
+          <tbody id ="liste_produit_panier">                                  
+          </tbody>                
+      </table>                         
          
          
-
-          <div class = "container_panier d-inline-flex flex-column">
-            <div class="d-flex flex-column">
-              <div class="total_panier">Total du panier: </div>
-              <div class="bouton_vider_panier my-3">
-                <button class= "btn btn-danger btn_delete_panier">Vider le panier</button>
-              </div>
+      <div class = "container_panier d-inline-flex flex-column">
+        <div class="d-flex flex-column">
+          <div class="total_panier">Total du panier: </div>
+          <div class="bouton_vider_panier my-3">
+          <button class= "btn btn-danger" id="btn_delete_panier">Vider le panier</button>
+        </div>
+      </div>
+         
+                                
+                                     
+      <!--Formulaire avec bootstrap--> 
+      <section class="container formulaire_commande center px-0 mt-3">
+        <form method ="post" action="">
+          <!--nom et prenom-->  
+          <div class="row">
+            <div class="col ">
+              <label for="nom"></label>              
+                <input type="text" id="nom" class="form-control" placeholder="Nom de Famille" required >
+            </div>                
+            <div class="col">
+              <label for="prenom"></label>
+              <input type="text" id="prenom" class="form-control" placeholder="Prénom" required>
             </div>
-         
-                
-            </section> <!--avec bootstrap--> 
-            <section class="container formulaire_commande mt-3">
-                <form>
-                    <div class="row">
-                      <div class="col">
-                        <input type="text" class="form-control" placeholder="Nom de Famille" required>
-                      </div>
-                      <div class="col">
-                        <input type="text" class="form-control" placeholder="Prénom" required>
-                      </div>
-                    </div>
-                  </form>
+          </div>
+                 
+          <div class="formulaire">         
+            <div class="form-group ">     
+            <!--renseigner l'action pour utilisateur-->
+            <!--email-->
+            <label for="email">Adresse email</label>
+              <!--label = id pour mettre curseur dans bonne case--> 
+              <input type="email" id="email" name="email" class="form-control "
+                    required placeholder="Entrez une adresse mail valide"/>
+              <!-- navigateurs qui ne prennent pas en compte format, rajouter format attendu-->
+          </div>
 
-                  <!--steph-->
-                <div class="formulaire">
-                 <form method="post" action="">                                                                       
-                  <div class="form-group">
-                    <!--renseigner l'action pour utilisateur-->
-                    <label for="email">Adresse email</label>
-                    <!--label = id pour mettre curseur dans bonne case--> 
-                    <input type="email" id="email" name="email"
-                      class="form-control"
-                      required placeholder="Entrez une adresse mail valide"/>
-                      <!-- navigateurs qui ne prennent pas en compte format, rajouter format attendu-->
-                  </div>
-
-                  <div class="form-group">
-                    <label for="adresse">Adresse postale et de facturation</label>
-                    <input type="text" id="adresse" name="adresse"
-                      class="form-control"
-                      required placeholder="numéro, nom de la rue"/>
-                  </div>
+            <!--adresse-->
+          <div class="form-group">           
+            <label for="adresse">Adresse postale et de facturation</label>
+            <input type="text" id="adresse" name="adresse" class="form-control"
+                  required placeholder= "numéro, nom de la rue"/>
+          </div>
     
-                  <div class="row">
-                    <div class="col">
-                      <input type="text" class="form-control" placeholder="Ville" required>
-                    </div>
-                    <div class="col">
-                      <input type="text" class="form-control" placeholder="code postal" maxlenghth="5"required>
-                    </div>
-                  </div>
+          <div class="row">
+            <div class="col">
+              <label for="ville"></label>
+              <input type="text" id="ville"  class="form-control" placeholder="Ville" required>
+            </div>
+            <div class="col">
+              <label for="code_postal"></label>
+              <input type="text" id="code_postal"class="form-control" name="code_postal" placeholder="code postal" maxlenghth="5"required>
+            </div>
+          </div>
 
-               
-                    
-                      
-                      
-                  
-
-                  <h3>Veuillez vérifier votre commande avant de valider le
-                    paiement</h3>
-                  <div class="form-group">
-                    <label>Choix du moyen de paiement</label>
-                    <div id="carte">
-                      <input type="radio" class="paiement" name="identifieur"
-                        value="Visa"checked />
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-credit-card" viewBox="0 0 16 16">
-                          <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z"/>
-                          <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"/>
-                        </svg>
-                      <input type="radio" class="paiement" name="identifieur"
+                                  
+          <h3 class="my-3">Veuillez vérifier votre commande avant de valider le paiement</h3>
+            <div class="form-group">
+              <label>Choix du moyen de paiement</label>
+                <div id="carte">
+                  <input type="radio" class="paiement" name="identifieur" value="Visa"checked />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-credit-card" viewBox="0 0 16 16">
+                      <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z"/>
+                      <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"/>
+                    </svg>
+                  <input type="radio" class="paiement" name="identifieur"
                       value="Mastercard"checked /><i class="fab fa-cc-mastercard fa-2x"></i>                                                 
-                      <input type="radio" class="paiement" name="identifieur"
+                  <input type="radio" class="paiement" name="identifieur"
                       value="Paypal"checked /><i class="fab fa-cc-paypal fa-2x"></i>                                           
-                    </div>
-                  </div>
-    
-                  <a href="confirmation.html"><button id="confirm-command">Passer la commande</button></a>  
-                </form>
-              </div>
-            </section>
-          </main>
-    
-          <footer class ="container bg-dark py-3   d-flex ">
-            <div class="row w-100" >
-                <div class ="col-6 col-md-12 col  d-flex justify-content-md-center  w-100">
-                    <ul class="list-inline text-left text-md-center my-0 ">
-                        <li class="list-inline-item px-4 py-3"><a class="py-3 px-2 h-100 W-auto" href="#">A propos</a></li>
-                        <li class="list-inline-item px-4"><a href="#">Données et confidentialité</a></li>
-                        <li class="list-inline-item px-4"><a href="#">Mentions légales</a></li>
-                        <li class="list-inline-item px-4"><a href="#">Fonctionnement du site</a></li>
-                        <li class="list-inline-item px-4"><a href="mailto:contact@orinoco.com">Contactez-nous</a></li>
-                    </ul>
                 </div>
-            </div>        
+            </div>
+      
+          <a href="confirmation.html"><button id="confirm-command" class="mb-3">Passer la commande</button></a>  
+        </form>
+      </section>
+    </main>
+    
+    <footer class ="container bg-dark py-3   d-flex ">
+      <div class="row w-100" >
+        <div class ="col-6 col-md-12 col  d-flex justify-content-md-center  w-100">
+          <ul class="list-inline text-left text-md-center my-0 ">
+            <li class="list-inline-item px-4 py-3"><a class="py-3 px-2 h-100 W-auto" href="#">A propos</a></li>
+            <li class="list-inline-item px-4"><a href="#">Données et confidentialité</a></li>
+            <li class="list-inline-item px-4"><a href="#">Mentions légales</a></li>
+            <li class="list-inline-item px-4"><a href="#">Fonctionnement du site</a></li>
+            <li class="list-inline-item px-4"><a href="mailto:contact@orinoco.com">Contactez-nous</a></li>
+          </ul>
+        </div>
+      </div>        
     </footer>
 
     <!--script javaScript-->
@@ -189,4 +175,4 @@
   </body>
 </html>
 
-    
+  

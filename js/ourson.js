@@ -49,7 +49,7 @@ let address = url.searchParams.get("address");
     }
                   
 // Validation du panier au click//
-  bouton.onclick = () => {
+bouton.onclick = () => {
   // création objet//
     teddyChoice = {
       id: ourson_id,
@@ -78,35 +78,43 @@ let address = url.searchParams.get("address");
 
   //----------- fonction fenêtre pop up------------------//
   let popupconfirmation = () => {
-    if (
-      window.confirm(`nom: ${product_title.textContent} colors: ${product_color_select.value}
+    if (window.confirm(
+        //nom
+      `L'ourson ${product_title.textContent}
+      Couleur : ${product_color_select.value}
       a bien été ajouté au panier 
-      Consulter le panier Ok ou revenir à l'accueil ANNULER`)
-      ){
-      window.location.href ="panier.html";
-      }
-       else {
+      Souhaitez vous consulter votre panier?`)
+    ) {
+      window.location.href = "panier.html";
+    } else {
       window.location.href = "index.html";
-      }
+    }
   };
 
-  //------- ajouter le produit selectionné dans le LS----//
-    let addProductLs = () => {
+
+
+  //------- Fonction ajouter le produit selectionné dans le LS----//
+  let addProductLs = () => {    
     //mettre dans le tableau les valeurs de teddychoice choisi par l'utilisateur
     panier.push(teddyChoice);
     // transforme l'objet en chaine de caractére et envoie dans la clef "panier"
     localStorage.setItem("panier", JSON.stringify(panier));
-    };
+  };
+
+
 
   //-------vérifier s'il y a déja des produits enregistré dans le LS-------
     //si valeur = null ou '' => false)
     // la valeur (clef) dans le else a été créer => le if devient true
 
-    if (panier) {  // s'il n'y a pas de produit déja enregistré      
-                       // sinon ajout d'1 nouveau produit des que le 1 er est enregistré (else)
-    addProductLs();
+    if (panier) {  // s'il n'y a pas de produit déja enregistré  
+    // sinon ajout d'1 nouveau produit des que le 1 er est enregistré (else)
+
+     gestionDoublons (panier, teddyChoice);
+             
       //allez sur le panier ou continuer achat
       popupconfirmation();
+
     } else {
       panier = [];
       addProductLs();
@@ -115,38 +123,37 @@ let address = url.searchParams.get("address");
     }
 
 
+function gestionDoublons(panier, teddyChoice) {
+  console.log("gestionDoublons()");
+  let doublonExiste = false;
+  //on parcourt le panier
+  for (let i = 0; i < panier.length; i++) {
+    // si l'on trouve le meme id et la même couleur : on rajoute les quantites de teddychoice à l'ourson déja présent
+    if (
+      teddyChoice.id == panier[i].id && teddyChoice.colors == panier[i].colors
+    ) {
+      doublonExiste = true;
+      console.log("doublon trouvé :");
+      // console.log(teddyChoice.id);
+      // console.log(teddyChoice.colors);
+    // on récupére la valeur de l'ourson deja present dans le panier +   
 
+//!!!!!!!!!!!!!    panier = panier[i].quantite + teddyChoice[i].quantite;
 
+    console.log(panier);
 
-    
-
-//-----verifier s'il n'y a pas de doublon d'article----
-
-  if (!ourson_id) { // s'il n'y a pas de doublon
-      addProductLs();
-      console.log("pas de doublon")
-  } else {  // s'il y a des doublons    
-      ajouterLesQuantites();
+    } else {
+      console.log("doublon non trouvé :");
+      console.log(teddyChoice.id);
+      console.log(teddyChoice.colors);
+    }
   }
-
-
+  //s'il n'y a pas de doublon : push addproductLS
+  if (doublonExiste == false) {   
+    addProductLs();
+  }
 }
-
-
-function ajouterLesQuantites(){
-for (i = 0; i < panier.length; i++) {
-   id_selectionné === panier[i].id;
-    qt.value.textContent
-
- 
-
-    
-
-
-
-}
-
-
+  
 }
 
     
