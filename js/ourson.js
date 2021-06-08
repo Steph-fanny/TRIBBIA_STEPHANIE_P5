@@ -109,7 +109,6 @@ bouton.onclick = () => {
 
     if (panier) {  // s'il n'y a pas de produit déja enregistré  
     // sinon ajout d'1 nouveau produit des que le 1 er est enregistré (else)
-
      gestionDoublons (panier, teddyChoice);
              
       //allez sur le panier ou continuer achat
@@ -136,12 +135,11 @@ function gestionDoublons(panier, teddyChoice) {
       console.log("doublon trouvé :");
       // console.log(teddyChoice.id);
       // console.log(teddyChoice.colors);
-    // on récupére la valeur de l'ourson deja present dans le panier +   
 
-//!!!!!!!!!!!!!    panier = panier[i].quantite + teddyChoice[i].quantite;
-
-    console.log(panier);
-
+      // on récupére la valeur de l'ourson deja present dans le panier (teddyChoice[i].quantite;)
+      //!!!!!!!!!!!!!  quantité= panier[i].quantite + teddyChoice[i]// panier[i].quantite = quantite + teddyChoice[i].quantite;
+     teddyChoice.quantite = panier[i].quantite + teddyChoice[i].quantite;
+      console.log(teddyChoice.quantite);
     } else {
       console.log("doublon non trouvé :");
       console.log(teddyChoice.id);
