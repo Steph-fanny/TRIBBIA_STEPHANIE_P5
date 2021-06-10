@@ -133,23 +133,32 @@ function gestionDoublons(panier, teddyChoice) {
     ) {
       doublonExiste = true;
       console.log("doublon trouvé :");
+    
       // console.log(teddyChoice.id);
       // console.log(teddyChoice.colors);
 
-      // on récupére la valeur de l'ourson deja present dans le panier (teddyChoice[i].quantite;)
-      //!!!!!!!!!!!!!  quantité= panier[i].quantite + teddyChoice[i]// panier[i].quantite = quantite + teddyChoice[i].quantite;
-     teddyChoice.quantite = panier[i].quantite + teddyChoice[i].quantite;
-      console.log(teddyChoice.quantite);
+    // on modifie la qté du nouvel ourson:     
+    // variable avec le calcul de la nouvelle quantité de l'ourson 
+    let nouvelleQuantite = parseInt(panier[i].quantité) + parseInt(teddyChoice.quantité);
+    
+    console.log(nouvelleQuantite);
+    // mettre la nouvelle quantité dans la variable panier
+    panier[i].quantité= nouvelleQuantite;    
     } else {
+      
       console.log("doublon non trouvé :");
       console.log(teddyChoice.id);
       console.log(teddyChoice.colors);
     }
   }
   //s'il n'y a pas de doublon : push addproductLS
-  if (doublonExiste == false) {   
-    addProductLs();
+  if (doublonExiste == false) {
+    addProductLs();    
+  }else{
+    //  enregistrer la variable panier dans le LS
+    localStorage.setItem("panier", JSON.stringify(panier));
   }
+
 }
   
 }

@@ -84,75 +84,74 @@ function affichagePanier(panier){
     console.log("ligne de produit:");
     console.log(panier[i]);
 
-  let row = document.createElement("tr");
-  row.textContent = panier[i].nom;
-  row.setAttribute("class", "ligne_produit_panier");
-  document.getElementById("liste_produit_panier").appendChild(row);
+    let row = document.createElement("tr");
+    row.textContent = panier[i].nom;
+    row.setAttribute("class", "ligne_produit_panier");
+    document.getElementById("liste_produit_panier").appendChild(row);
 
-  //affichage colonne prix
-  let column_price = document.createElement("th");
-  column_price.setAttribute("id", "prix");
-  column_price.innerText = panier[i].prix;
-  row.appendChild(column_price);
-  // console.log(panier[i].prix);
+    //affichage colonne prix
+    let column_price = document.createElement("th");
+    column_price.setAttribute("id", "prix");
+    column_price.innerText = panier[i].prix;
+    row.appendChild(column_price);
+    // console.log(panier[i].prix);
 
-  // affichage prix sans "euros" pour calcul total ligne
-  let price = parseFloat(column_price.innerText.replace("euros", ""));
-  // console.log(price);
+    // affichage prix sans "euros" pour calcul total ligne
+    let price = parseFloat(column_price.innerText.replace("euros", ""));
+    // console.log(price);
 
-  //affichage colonne quantité
-  let column_qt = document.createElement("th");
-  column_qt.setAttribute("id", "quantite");
-  column_qt.innerText = panier[i].quantité;
-  row.appendChild(column_qt);
-  // console.log(panier[i].quantité);
+    //affichage colonne quantité
+    let column_qt = document.createElement("th");
+    column_qt.setAttribute("id", "quantite");
+    column_qt.innerText = panier[i].quantité;
+    row.appendChild(column_qt);
+    // console.log(panier[i].quantité);
 
-  // affichage colonne couleur
-  let column_colors = document.createElement("th");
-  column_colors.textContent = panier[i].colors;
-  row.appendChild(column_colors);
-  // console.log("couleurs choisies:")
-  // console.log(panier[i].colors);
+    // affichage colonne couleur
+    let column_colors = document.createElement("th");
+    column_colors.textContent = panier[i].colors;
+    row.appendChild(column_colors);
+    // console.log("couleurs choisies:")
+    // console.log(panier[i].colors);
 
-  // affichage total ligne
-  let columnTotalPrice = document.createElement("th");
-  columnTotalPrice.innerText = price * panier[i].quantité + " €";
-  columnTotalPrice.setAttribute("id", "prix_total_ligne");
-  row.appendChild(columnTotalPrice);
-  // console.log("prix total par ligne:");
-  // console.log(columnTotalPrice.innerText);
+    // affichage total ligne
+    let columnTotalPrice = document.createElement("th");
+    columnTotalPrice.innerText = price * panier[i].quantité + " €";
+    columnTotalPrice.setAttribute("id", "prix_total_ligne");
+    row.appendChild(columnTotalPrice);
+    // console.log("prix total par ligne:");
+    // console.log(columnTotalPrice.innerText);
 
-  // création bouton supprimer
-  let btnSupprimer = document.createElement("button");
-  btnSupprimer.textContent = "supprimer";
-  btnSupprimer.setAttribute("class", "btn btn-secondary");        
-  row.appendChild(btnSupprimer);
+    // création bouton supprimer
+    let btnSupprimer = document.createElement("button");
+    btnSupprimer.textContent = "supprimer";
+    btnSupprimer.setAttribute("class", "btn btn-secondary");
+    row.appendChild(btnSupprimer);
+
+    //calcul du total Panier ------ a finir ---------
+    let sommeTotale = 0;
+    let prixLignePanier = parseInt(panier[i].quantité) * parseInt(panier[i].prix);
+    console.log(prixLignePanier);
+
+    panier.forEach((panier) => {
+      sommeTotale += parseInt(panier.quantité) * parseInt(panier.prix);
+    });
+    console.log(sommeTotale);
+
+    // affichage du prix total   
+  let total_panier = document.getElementsByClassName("totalPanier");
+  total_panier.value = sommeTotale  + " €";     
+   console.log(total_panier);
+  
+  document.getElementById("total_prix_panier").textContent =
+    "Total du panier : " +  total_panier.value ;
+  
+
+  //enregistrement dans le LS
+localStorage.setItem("prixtotalpanier", (total_panier.value));
+    
   } 
-}
-
-
-//calcul du total Panier ------ a finir ---------
-// let totalPrice = 0;
-// let calculPrice = []
-// for (panier of panier){
-//   let
-// }
-
-// console.log(totalprice);
-// let total_column = document.getElementsByClassName(prix_total_ligne)
-            
-        // calculPrice.push(totalPriceLigne);
-        // console.log(calculPrice);
-
-        // const reducer = (accumulator, currentValue) => accumulator + currentValue;
-        // let totalPrice = calculPrice.reduce (reducer, 0);
-        // console.log(totalPrice);
-
-        // let totalPricePanier = document.getElementsByClassName("total_panier");
-
-        //  localStorage.setItem("prixtotalpanier", );
-        
-                            
+}                                    
 //----------fin fonction affichage produit panier-----------//
 
 
@@ -175,16 +174,10 @@ function affichagePanier(panier){
 
 
 
-
-
-
-
-
-
-
-
    
     //---------------------formulaire---------------
+
+
 
     let btnenvoyerFormulaire = document.getElementById("confirm-command");
 
@@ -204,8 +197,12 @@ function affichagePanier(panier){
       console.log("Valeurs du formulaire :");
       console.log(formulaireValues);
 
+
+
+    })
   ///-----------------validation du formulaire------------
       //controle avec les expressions régulieres- rationnelle / regex
+
 
       //***********fonction********** */
   function validateNomPrenomVille(value) {
@@ -235,17 +232,26 @@ function affichagePanier(panier){
 
       //******fin fonction ***** */
 
+
+
       // controle de la validite du prenom 
       let validationPrenom = formulaireValues.prenom
-    XXXXXX.addEventListener("change", function (event) {
-        e.preventDefault();       
-        if (validateNomPrenomVille(XXXXX)) {
-        } else {
-          alert(
-            "Les chiffres et symboles ne sont pas autorisés\n min 3 caractéres, ne pas dépasser 20 caractéres"
-          );
-        }
-      });
+    validationPrenom.addEventListener("keyup", function (event) {
+      e.preventDefault();
+      if (validationPrenom.validity.typeMismatch) {
+        validationPrenom.setCustomValidity ("merci de renseigner une adresse mail")
+      } else {
+        alert(
+          "Les chiffres et symboles ne sont pas autorisés\n min 3 caractéres, ne pas dépasser 20 caractéres"
+        );
+      }
+    });
+
+
+
+
+
+
 
       //---------------------------------------Fin validation formulaire
 
@@ -263,7 +269,7 @@ function affichagePanier(panier){
       };
       console.log("données à envoyer au serveur:");
       console.log(aEnvoyer);
-    })
+  
 
 
 
