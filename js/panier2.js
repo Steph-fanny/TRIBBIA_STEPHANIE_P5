@@ -167,106 +167,210 @@ function affichagePanier(panier){
 //-----fin fonction btn supprimer ligne 
 
 
-//*******************************FORMULAIRE**********************//
-//***************************************************************//
+
+
+//*******************************FORMULAIRE***************************************//
+//********************************************************************************//
+  // 1. Vérifier si tous les champs sont remplis
+  // 2. Valider chaque champs 
+
+
+
+////////////////////////////////// LOGIQUE ///////////////////////////
+ 
+let btnenvoyerFormulaire = document.getElementById("confirm-command");
+console.log(btnenvoyerFormulaire);
+
+//Au clic du bouton : valider les champs un par un 
+btnenvoyerFormulaire.addEventListener("click", (e) => {
+e.preventDefault();
+validateCodePostal();
+validateVille();
+validateAddress();
+validateEmail();
+validatePrenom();
+validateNom();
+
+
+// verifierAllFields();
+
+ 
+    
+// valeurs à récupérer pour les placer dans le LS
+let formulaireValues = {
+  nom: document.getElementById("nom").value,
+  prenom: document.getElementById("prenom").value,
+  Email: document.getElementById("email").value,
+  adresse: document.getElementById("adresse").value,
+  ville: document.getElementById("ville").value,
+  codepostal: document.getElementById("code_postal").value,
+};
+console.log("Valeurs du formulaire :");
+console.log(formulaireValues);
+
+
+//Mettre l'objet "formulaireValues" dans le LS si tous les champs sont valides
+// la valeur : formulaireValues : n'est pas une chaine de caractére :
+  localStorage.setItem("formulaire", JSON.stringify(formulaireValues));
+
+
+
+
+  // mettre les valeurs du formulaire et les produits selectionnés dans un objet pour envoyer au serveur
+  let aEnvoyer = {
+  panier,
+  formulaireValues,
+  }
+  console.log("données à envoyer au serveur:")
+  console.log(aEnvoyer);
+ });
+
+
+
+
+
+
+
+
 
    
-    //---------------------formulaire---------------
-    // 1. Verifier si tous les champs sont remplis
-
-
     
+///-----------------validation du formulaire------------
+  
 
-  ///-----------------validation du formulaire------------
-      //controle avec les expressions régulieres- rationnelle / regex
+    //***********fonctions********** */
+    //controle avec les expressions régulieres- rationnelle / regex
 
-      //***********fonction********** */
-  function validateNom() {
-    //commencer par 1 lettre en maj ou min
-    // controle lettre et min 3/ max 20 caracteres
-    let validationNom = document.getElementById("nom").value;
-    if (/^[A-Za-z]{3,20}$/.test(validationNom)) {
+// fonction regex commun pour nom, prenom et ville 
+let regExNomPrenomVille = (value) => {
+  //commencer par 1 lettre en maj ou min +  3 lettres min/ max 20  
+  return /^[A-Za-z]{3,20}$/.test(value);
+};
+
+let regExEmail = (value) => {
+  return /^(([^<()[\]\\.,;:\s@\]+(\.[^<()[\]\\.,;:\s@\]+)*)|(.+))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/
+  .test(value);
+}
+
+let textAlert = (value) =>{    
+  return `Le ${value} est incorrect\n Minimun 3 caractéres, maximum 20 !\n  Les chiffres et symboles ne sont pas autorisés!`;
+}
+
+function validateNom() {    
+  let validationNom = document.getElementById("nom").value;
+    if (regExNomPrenomVille(validationNom)) {
       document.getElementById("nom").style.border = "2px solid green";
-      console.log(validationNom);
-    }else{
-      document.getElementById("nom").style.border = "2px solid red"; 
-      document.getElementById("message").innerText = "Le nom est incorrect \n Les chiffres et symboles ne sont pas autorisés\n min 3 caractéres, ne pas dépasser 20 caractéres!"
-      // alert( "Les chiffres et symboles ne sont pas autorisés\n min 3 caractéres, ne pas dépasser 20 caractéres");
-      console.log("ko");
-  }
+      console.log("true");
+      return true;
+    } else {
+      document.getElementById("nom").style.border = "2px solid red";
+      document.getElementById("message").innerText = textAlert("Nom");
+      console.log("false");
+      return false;    
+    }
 }
   
-function validatePrenom() {
-  //commencer par 1 lettre en maj ou min
-  // controle lettre et min 3/ max 20 caracteres
+function validatePrenom() { 
   let validationPrenom = document.getElementById("prenom").value;
-  if (/^[A-Za-z]{3,20}$/.test(validationPrenom)) {
-    document.getElementById("prenom").style.border = "2px solid green";
-    console.log("ok");
+  if (regExNomPrenomVille (validationPrenom)) {
+    document.getElementById("prenom").style.border = "2px solid green"; 
+    console.log("true");  
+    return true;
   } else {
     document.getElementById("prenom").style.border = "2px solid red";
-    document.getElementById("message").innerText =
-      "Le prenom est incorrect : minimun 3 caractéres, maximum 20 !  \n Les chiffres et symboles ne sont pas autorisés"
-    // alert( "Les chiffres et symboles ne sont pas autorisés\n min 3 caractéres, ne pas dépasser 20 caractéres");
-    console.log("ko");
+    document.getElementById("message").innerText = textAlert("Prénom");
+    console.log("false");
+    return false;       
   }
 }
 
-function validateVille() {
-  //commencer par 1 lettre en maj ou min
-  // controle lettre et min 3/ max 20 caracteres
+function validateVille() {  
   let validationVille = document.getElementById("ville").value;
-  if (/^[A-Za-z]{3,20}$/.test(validationVille)) {
-    document.getElementById("ville").style.border = "2px solid green";
-    console.log(validationVille);
+  if (regExNomPrenomVille(validationVille)) {
+    document.getElementById("ville").style.border = "2px solid green";    
+    console.log("true")
+    return true    
   } else {
     document.getElementById("ville").style.border = "2px solid red";
-    document.getElementById("message").innerText =
-      "La ville est incorrect : minimun 3 caractéres, maximum 20 !  \n Les chiffres et symboles ne sont pas autorisés";
-    console.log("ko");
+    document.getElementById("message").innerText = textAlert("ville");      
+     console.log("false")
+    return false;    
   }
 }
 
-
-
-
-
-
-  // Critere de validité de l'adresse mail
-  function validateEmail() {
-    let validationEmail = document.getElementById("email").value;
-    if (/^ [A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$/.test(
-        validationEmail)) {
-          document.getElementById("email").style.border = "2px solid green";
-        console.log(validationEmail);
+function validateEmail() {
+  let validationEmail = document.getElementById("email").value;
+  if (regExEmail(validationEmail)) {
+    document.getElementById("email").style.border = "2px solid green"; 
+    console.log("true");     
+    return true;
   } else {
     document.getElementById("email").style.border = "2px solid red";
-    document.getElementById("message").innerText = " L'adresse mail est incorrecte "    
-    console.log("ko");
+    document.getElementById("message").innerText = " L'adresse mail est incorrecte ";
+    console.log("false");
+    return false;      
+  }
+}
+    
+function validateCodePostal() {
+  let validationCodePostal = document.getElementById("code_postal").value;
+  if(/^[0-9]{5}$/.test(validationCodePostal )){
+    document.getElementById("code_postal").style.border = "2px solid green";   
+    console.log("true");   
+  return true;
+  } else {
+    document.getElementById("code_postal").style.border = "2px solid red";
+    document.getElementById("message").innerText = " Le code postal est incorrect "   
+    console.log("false"); 
+    return false;      
+  }
+}
+      
+function validateAddress() {
+  let validationAdresse = document.getElementById("adresse").value;
+  if(/^[A-Z-a-z-0-9\s]{5,80}$/.test(validationAdresse)){
+    document.getElementById("adresse").style.border = "2px solid green";  
+    console.log("true");   
+  return true;
+  } else {
+    document.getElementById("adresse").style.border = "2px solid red";
+    document.getElementById("message").innerText =
+    " l'adresse est incorrect \n Les chiffres et symboles ne sont pas autorisés "; 
+    console.log("false");   
+  return false;
+       ;
   }
 }
 
+// vérifier si tous les champs sont remplis correctement 
+//  function verifierAllFields() {
+   ////----------------1. verifier si toutes les valeurs sont remplies------
+   // declarer une variable pour chaque champs : initial = false car pas rempli
+   // lors click bouton : soumettre le formulaire si toutes les donnees sont passées true  = rempli et format correct
+   // si 1 non conforme  : pas envoie formulaire
+  //  let nom = false;
+  //  let prenom = false;
+  //  let email = false;
+  //  let adresse = false;
+  //  let code_postal = false;
+  //  let ville = false;
 
-    //Critere de  validité du code postal
-    function validateCodePostal() {
-    let validationCodePostal = document.getElementById("code_postal").value;
-    if(/^[0-9]{5}$/.test(validationCodePostal )){
-      document.getElementById("code_postal").style.border = "2px solid green";
-      console.log(validationCodePostal);
-    } else {
-      document.getElementById("code_postal").style.border = "2px solid red";
-      document.getElementById("message").innerText = " Le code postal est incorrect "    
-      console.log("ko");
-    }
-  }
+  // //  vérifier si toutes les valeurs ont basculées à true
+  //  if ( nom == true &&  prenom == true &&  email == true && adresse == true &&  code_postal == true &&
+  //    ville == true ) {
+  //    //=> l'ensemble des champs est conforme et le formulaire peut être envoyé
+  //    document.getElementById("message").innerText = "Le formulaire est correctement rempli";
+  //   //  localStorage.setItem("formulaire", JSON.stringify(formulaireValues));
 
-      // Critere de validite de l'adresse
-      function validateAddress(value) {
-        return /^[A-Z-a-z-0-9\s]{5,80}$/.test(value);
-      }
-
-
-
+  //    // !!!!!!!!//envoi du formulaire avec post
+  //    // document.getElementById("formulaire").submit();
+  //  } else {
+  //    //sinon message d'erreur
+  //    document.getElementById("message").innerText =
+  //      "Le formulaire n'est pas complet : merci de renseigner tous les élements ";
+  //  }
+ 
+  // }
 
 
 
@@ -274,132 +378,32 @@ function validateVille() {
       
 
 
-///////A GARDER ///////////////
-////-----------------verifier si toutes les valeurs sont remplies------
+   
+
+
   
-// declarer une variable pour chaque champs : initial = false car pas rempli
-// lors click bouton : soumettre le formulaire si toutes les donnees sont passées true  = rempli et format correct
-// si 1 non conforme  : pas envoie formulaire
-let nom = false;
-let prenom = false;
-let email = false;
-let adresse = false;
-let code_postal = false;
-let ville = false;
-
-  function verifierAllFields(){
-  // vérifier si toutes les valeurs ont basculées à true
-  if (nom == true && prenom == true && email == true && adresse == true &&  code_postal == true &&
-  ville == true){
-    //=> l'ensemble des champs est conforme et le formulaire peut être envoyé
-    document.getElementById("message").innerText = "Le formulaire est correctement rempli";
-
-    // !!!!!!!!//envoi du formulaire avec post
-    // document.getElementById("formulaire").submit();
-
-   } else {
-     //sinon message d'erreur    
-     document.getElementById("message").innerText =
-       "Le formulaire n'est pas complet : merci de renseigner tous les élements ";
-    }
-
-  //  veridier l'addichage de la valeur "false" des variables (au fur et à mesure)
-  document.getElementById("message").innerText += "-" + nom + "-" + prenom + "-" +
-  email + "-" + adresse + "-" + code_postal +  "-" + ville;
-  }
+   
 
 
-// au click du bouton
-let btnenvoyerFormulaire = document.getElementById("confirm-command");
-console.log(btnenvoyerFormulaire);
 
-btnenvoyerFormulaire.addEventListener("click" ,() => {
-  validateNom()
-  validatePrenom()
-  validateEmail()
-  validateVille();
-  validateCodePostal();
-  // verifierAllFields();
+
+
+
+
+
   
   
-})
 
-///////FIN DE A GARDER 
 
 
    //******fin fonction ***** */
 
 
 
-//    //validation du Nom
-// let validationNom = document.getElementById("nom")    
-// if validationNom 
 
 
-//    if (validationPrenom.validity.typeMismatch) {
-//            validationPrenom.setCustomValidity ("merci de renseigner une adresse mail")
-//          } else {
-//            // bordure rouge
-//             document.getElementById("nom").style.border= "2px solid red";
-//            alert(
-//              "Les chiffres et symboles ne sont pas autorisés\n min 3 caractéres, ne pas dépasser 20 caractéres"
-//            );
-//          }
-//        });
-
-
-
-
-
-
-
-
-
-   //  let fields = [nom, prenom, email, adresse, ville, codepostal],
-   //    fieldsValidity = [isnomValid,isprenomValid,isemailValid,isadresseValid,
-   //                     isvilleValid,iscodepostalValid,];
-   //    isAFieldInvalid = false;
 
    
-
-
-  
-
-   
-
-   
-   //       } else if (fields[i] === document.querySelector("#address")) {
-   //         message = "L'adresse postale est incorrecte !";
-   //       } else if (fields[i] === document.querySelector("#city")) {
-   //         message = "La ville est incorrecte !";
-   //       } else {
-   //         message = "L'adresse mail est incorrecte !";
-   //       }
-
-   // let fields = [nom, prenom, email, adresse, ville, codepostal],
-   //        fieldsValidity = [isnomValid,isprenomValid,isemailValid,isadresseValid,
-   //                         isvilleValid,iscodepostalValid,];
-   //        isAFieldInvalid = false;
-
-   // // si tous les champs sont valides
-   // // alors envoie du formulaire
-   // // sinon bloquage et message d'alert
-
-   //       // controle de la validite du prenom
-   //       let validationPrenom = formulaireValues.prenom
-   //     validationPrenom.addEventListener("keyup", function (event) {
-   //       e.preventDefault();
-   //       if (validationPrenom.validity.typeMismatch) {
-   //         validationPrenom.setCustomValidity ("merci de renseigner une adresse mail")
-   //       } else {
-   //         alert(
-   //           "Les chiffres et symboles ne sont pas autorisés\n min 3 caractéres, ne pas dépasser 20 caractéres"
-   //         );
-   //       }
-   //     });
-
-   // }
-   // }
 
    // a conserver
 
