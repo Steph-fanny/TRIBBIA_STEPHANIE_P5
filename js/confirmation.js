@@ -3,10 +3,9 @@ document.getElementById('commandId').textContent = orderId
 
 function addConfirmationText(){
     let confirmationId = localStorage.getItem("orderConfirmation");
-    let totalPrice = localStorage.getItem("TotalPriceConfirmationPage");
+    let totalPrice = localStorage.getItem("prixtotalpanier");
     let confirmation = document.getElementById("Confirmation");
-    let messageConfirmation = document.createElement ("p")
-    let confirmationPrice = document.createElement ("p")
+   
 
     messageConfirmation.innerText = 
     "nous vous remercions pour votre commande n° " + confirmationId;

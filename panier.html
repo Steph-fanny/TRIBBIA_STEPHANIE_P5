@@ -76,7 +76,7 @@
         <div class="d-flex flex-column" id="container_total_price">
           <div class="total_panier" id="total_prix_panier" ></div>
           <div class="bouton_vider_panier my-3">
-          <button class= "btn btn-danger" id="btn_delete_panier">Vider le panier</button>
+          <button class= "btn btn-danger mb-5" id="btn_delete_panier">Vider le panier</button>
         </div>
       </div>
          
@@ -84,7 +84,10 @@
                                      
       <!--Formulaire avec bootstrap--> 
       <section class="container formulaire_commande center px-0 mt-3">
-        <form method ="post" action="" > <!--desactivation validation auto-->
+        <!--champ pour donner des messages à l'utilisateur-->
+        <div id="message">Tous les champs sont obligatoires</div>
+
+        <form id="formulaire" method ="post" action="" > <!--desactivation validation auto-->
           <!--nom et prenom-->  
           <div class="row">
             <div class="col ">
@@ -101,7 +104,7 @@
             <div class="form-group ">     
             <!--renseigner l'action pour utilisateur-->
             <!--email-->
-            <label for="email">Adresse email</label>
+            <label for="email"></label>
               <!--label = id pour mettre curseur dans bonne case--> 
               <input type="email" id="email" name="email" class="form-control "
                     required placeholder="Entrez une adresse mail valide"/>

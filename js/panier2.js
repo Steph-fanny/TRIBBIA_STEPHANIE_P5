@@ -15,7 +15,8 @@
     // 8: Montant total du panier        
 
     
-//******************************Logique ***************************//  
+//***************************** LOGIQUE ***********************************//  
+//*************************************************************************//
 
 // 1 : récupérer les donnnées de l'ourson choisi en appelant la clef (panier):   
 let panier = JSON.parse(localStorage.getItem("panier"));
@@ -29,8 +30,7 @@ if (!panier || panier == 0) {
   affichagePanier(panier);
 }
 
-
-// 5---------------btn supprimer 1 element du panier au click -----------
+// 5---------------btn supprimer 1 element du panier au click -----------//
 let btn_supprimer = document.querySelectorAll("button.btn.btn-secondary")
   console.log(btn_supprimer)    
 
@@ -42,22 +42,21 @@ for (let i = 0; i <btn_supprimer.length; i++) {
 
   //on supprime l'article du localStorage
   panier.splice(i, 1);
-  console.log("panier aprés suppression");
-  console.log(panier);
+  // console.log("panier aprés suppression");
+  // console.log(panier);
+
   // on enregistre le nouveau LS avec la clef"panier"
   localStorage.setItem("panier", JSON.stringify(panier));
   JSON.parse(localStorage.getItem("panier"));
 
   // alert pour avertir que le produit a été supprimer et rechargement de la page
   alert("Ce produit va être supprimé du panier");
-  window.location.href = "panier.html"; // on revient à la page d'acceuil
+  window.location.href = "panier.html"; // on revient sur le panier
   })        
 }             
-// -----------fin btn supprimer une ligne----------//
+// -----------fin btn supprimer une ligne-----------------------------------------//
 
-
-//6 :----------supprimer tout le panier: ---------------
-
+//6 :----------supprimer tout le panier: -----------------------------------------//
 let btnDeletePanier = document.getElementById("btn_delete_panier");   
   // suprimer la clef produit "panier" du Ls pour vider entiérement le panier    
   btnDeletePanier.onclick = function viderLePanier() {
@@ -71,7 +70,9 @@ let btnDeletePanier = document.getElementById("btn_delete_panier");
     window.location.href = "panier.html"; // on revient à la page d'acceuil
   };    
    
-//**************************************functions*******************************//
+
+//************************************* FONCTIONS ********************************//
+//*******************************************************************************//
 
 //------- affichage message "panier vide"
 function affichagePanierVide() {
@@ -128,7 +129,7 @@ function affichagePanier(panier){
     btnSupprimer.setAttribute("class", "btn btn-secondary");
     row.appendChild(btnSupprimer);
 
-    //calcul du total Panier ------ a finir ---------
+    //calcul du total Panier 
     let sommeTotale = 0;
     let prixLignePanier = parseInt(panier[i].quantité) * parseInt(panier[i].prix);
     console.log(prixLignePanier);
@@ -139,21 +140,18 @@ function affichagePanier(panier){
     console.log(sommeTotale);
 
     // affichage du prix total   
-  let total_panier = document.getElementsByClassName("totalPanier");
-  total_panier.value = sommeTotale  + " €";     
-   console.log(total_panier);
+    let total_panier = document.getElementsByClassName("totalPanier");
+    total_panier.value = sommeTotale  + " €";     
+    console.log(total_panier);
   
-  document.getElementById("total_prix_panier").textContent =
-    "Total du panier : " +  total_panier.value ;
+    document.getElementById("total_prix_panier").textContent =
+    "Total du panier : " + total_panier.value ;
   
-
-  //enregistrement dans le LS
-localStorage.setItem("prixtotalpanier", (total_panier.value));
-    
+    //enregistrement dans le LS
+    localStorage.setItem("prixtotalpanier", (total_panier.value));    
   } 
 }                                    
-//----------fin fonction affichage produit panier-----------//
-
+//---------------fin fonction affichage produit panier-------------------//
 
 //------ btn supprimer ligne
   function supprimerUneLigneOurson() {
@@ -163,113 +161,284 @@ localStorage.setItem("prixtotalpanier", (total_panier.value));
     let ligneASupprimer = document.getElementsByTagName("tr");
     // console.log(ligneASupprimer);
     // boucle tant que le noeud parent (tbody) a 1 er enfant  : le supprimer
-    while (parentTbody.firstChild) {
-      parentTbody.removeChild(parentTbody.firstChild);
+    while (parentTbody.firstChild){parentTbody.removeChild(parentTbody.firstChild);
     }
   }
 //-----fin fonction btn supprimer ligne 
 
 
-
-
-
+//*******************************FORMULAIRE**********************//
+//***************************************************************//
 
    
     //---------------------formulaire---------------
+    // 1. Verifier si tous les champs sont remplis
 
 
+    
 
-    let btnenvoyerFormulaire = document.getElementById("confirm-command");
-
-    console.log(btnenvoyerFormulaire);
-    btnenvoyerFormulaire.addEventListener("click", (e)=> {
-      e.preventDefault();
-
-      //recuperation des valeurs du formulaire
-      let formulaireValues = {
-        nom: document.getElementById("nom").value,
-        prenom: document.getElementById("prenom").value,
-        Email: document.getElementById("email").value,
-        adresse: document.getElementById("adresse").value,
-        ville: document.getElementById("ville").value,
-        codepostal: document.getElementById("code_postal").value,
-      };
-      console.log("Valeurs du formulaire :");
-      console.log(formulaireValues);
-
-
-
-    })
   ///-----------------validation du formulaire------------
       //controle avec les expressions régulieres- rationnelle / regex
 
-
       //***********fonction********** */
-  function validateNomPrenomVille(value) {
-     //commencer par 1 lettre en maj ou min
+  function validateNom() {
+    //commencer par 1 lettre en maj ou min
     // controle lettre et min 3/ max 20 caracteres
-    return /^[A-Za-z]{3,20}$/.test(value);
+    let validationNom = document.getElementById("nom").value;
+    if (/^[A-Za-z]{3,20}$/.test(validationNom)) {
+      document.getElementById("nom").style.border = "2px solid green";
+      console.log(validationNom);
+    }else{
+      document.getElementById("nom").style.border = "2px solid red"; 
+      document.getElementById("message").innerText = "Le nom est incorrect \n Les chiffres et symboles ne sont pas autorisés\n min 3 caractéres, ne pas dépasser 20 caractéres!"
+      // alert( "Les chiffres et symboles ne sont pas autorisés\n min 3 caractéres, ne pas dépasser 20 caractéres");
+      console.log("ko");
   }
+}
+  
+function validatePrenom() {
+  //commencer par 1 lettre en maj ou min
+  // controle lettre et min 3/ max 20 caracteres
+  let validationPrenom = document.getElementById("prenom").value;
+  if (/^[A-Za-z]{3,20}$/.test(validationPrenom)) {
+    document.getElementById("prenom").style.border = "2px solid green";
+    console.log("ok");
+  } else {
+    document.getElementById("prenom").style.border = "2px solid red";
+    document.getElementById("message").innerText =
+      "Le prenom est incorrect : minimun 3 caractéres, maximum 20 !  \n Les chiffres et symboles ne sont pas autorisés"
+    // alert( "Les chiffres et symboles ne sont pas autorisés\n min 3 caractéres, ne pas dépasser 20 caractéres");
+    console.log("ko");
+  }
+}
 
-    // Critere de validité de l'adresse mail
-  function validateEmail(value) {
-    if ( /^ [A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$/
-    .test(value)) {
-      return true;
-      }
-      return false;
-      }
+function validateVille() {
+  //commencer par 1 lettre en maj ou min
+  // controle lettre et min 3/ max 20 caracteres
+  let validationVille = document.getElementById("ville").value;
+  if (/^[A-Za-z]{3,20}$/.test(validationVille)) {
+    document.getElementById("ville").style.border = "2px solid green";
+    console.log(validationVille);
+  } else {
+    document.getElementById("ville").style.border = "2px solid red";
+    document.getElementById("message").innerText =
+      "La ville est incorrect : minimun 3 caractéres, maximum 20 !  \n Les chiffres et symboles ne sont pas autorisés";
+    console.log("ko");
+  }
+}
 
-      //Critere de  validité du code postal
-      function validateCodePostal(value) {
-        return /^[0-9]{1,2} ?[0-9]{3}$/.test(value);
-      }
+
+
+
+
+
+  // Critere de validité de l'adresse mail
+  function validateEmail() {
+    let validationEmail = document.getElementById("email").value;
+    if (/^ [A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$/.test(
+        validationEmail)) {
+          document.getElementById("email").style.border = "2px solid green";
+        console.log(validationEmail);
+  } else {
+    document.getElementById("email").style.border = "2px solid red";
+    document.getElementById("message").innerText = " L'adresse mail est incorrecte "    
+    console.log("ko");
+  }
+}
+
+
+    //Critere de  validité du code postal
+    function validateCodePostal() {
+    let validationCodePostal = document.getElementById("code_postal").value;
+    if(/^[0-9]{5}$/.test(validationCodePostal )){
+      document.getElementById("code_postal").style.border = "2px solid green";
+      console.log(validationCodePostal);
+    } else {
+      document.getElementById("code_postal").style.border = "2px solid red";
+      document.getElementById("message").innerText = " Le code postal est incorrect "    
+      console.log("ko");
+    }
+  }
 
       // Critere de validite de l'adresse
       function validateAddress(value) {
         return /^[A-Z-a-z-0-9\s]{5,80}$/.test(value);
       }
 
-      //******fin fonction ***** */
-
-
-
-      // controle de la validite du prenom 
-      let validationPrenom = formulaireValues.prenom
-    validationPrenom.addEventListener("keyup", function (event) {
-      e.preventDefault();
-      if (validationPrenom.validity.typeMismatch) {
-        validationPrenom.setCustomValidity ("merci de renseigner une adresse mail")
-      } else {
-        alert(
-          "Les chiffres et symboles ne sont pas autorisés\n min 3 caractéres, ne pas dépasser 20 caractéres"
-        );
-      }
-    });
 
 
 
 
 
 
+      
 
-      //---------------------------------------Fin validation formulaire
 
-     ///*******envoyer la requete********/ 
-
-      //Mettre l'objet "formulaireValues" dans le LS si tous les champs sont valides
-
-      // la valeur : formulaireValues : n'est pas une chaine de caractére :
-      localStorage.setItem("formulaire", JSON.stringify(formulaireValues));
-
-      // mettre les valeurs du formulaire et les produits selectionnés dans un objet pour envoyer au serveur
-      let aEnvoyer = {
-        panier,
-        formulaireValues,
-      };
-      console.log("données à envoyer au serveur:");
-      console.log(aEnvoyer);
+///////A GARDER ///////////////
+////-----------------verifier si toutes les valeurs sont remplies------
   
+// declarer une variable pour chaque champs : initial = false car pas rempli
+// lors click bouton : soumettre le formulaire si toutes les donnees sont passées true  = rempli et format correct
+// si 1 non conforme  : pas envoie formulaire
+let nom = false;
+let prenom = false;
+let email = false;
+let adresse = false;
+let code_postal = false;
+let ville = false;
+
+  function verifierAllFields(){
+  // vérifier si toutes les valeurs ont basculées à true
+  if (nom == true && prenom == true && email == true && adresse == true &&  code_postal == true &&
+  ville == true){
+    //=> l'ensemble des champs est conforme et le formulaire peut être envoyé
+    document.getElementById("message").innerText = "Le formulaire est correctement rempli";
+
+    // !!!!!!!!//envoi du formulaire avec post
+    // document.getElementById("formulaire").submit();
+
+   } else {
+     //sinon message d'erreur    
+     document.getElementById("message").innerText =
+       "Le formulaire n'est pas complet : merci de renseigner tous les élements ";
+    }
+
+  //  veridier l'addichage de la valeur "false" des variables (au fur et à mesure)
+  document.getElementById("message").innerText += "-" + nom + "-" + prenom + "-" +
+  email + "-" + adresse + "-" + code_postal +  "-" + ville;
+  }
+
+
+// au click du bouton
+let btnenvoyerFormulaire = document.getElementById("confirm-command");
+console.log(btnenvoyerFormulaire);
+
+btnenvoyerFormulaire.addEventListener("click" ,() => {
+  validateNom()
+  validatePrenom()
+  validateEmail()
+  validateVille();
+  validateCodePostal();
+  // verifierAllFields();
+  
+  
+})
+
+///////FIN DE A GARDER 
+
+
+   //******fin fonction ***** */
+
+
+
+//    //validation du Nom
+// let validationNom = document.getElementById("nom")    
+// if validationNom 
+
+
+//    if (validationPrenom.validity.typeMismatch) {
+//            validationPrenom.setCustomValidity ("merci de renseigner une adresse mail")
+//          } else {
+//            // bordure rouge
+//             document.getElementById("nom").style.border= "2px solid red";
+//            alert(
+//              "Les chiffres et symboles ne sont pas autorisés\n min 3 caractéres, ne pas dépasser 20 caractéres"
+//            );
+//          }
+//        });
+
+
+
+
+
+
+
+
+
+   //  let fields = [nom, prenom, email, adresse, ville, codepostal],
+   //    fieldsValidity = [isnomValid,isprenomValid,isemailValid,isadresseValid,
+   //                     isvilleValid,iscodepostalValid,];
+   //    isAFieldInvalid = false;
+
+   
+
+
+  
+
+   
+
+   
+   //       } else if (fields[i] === document.querySelector("#address")) {
+   //         message = "L'adresse postale est incorrecte !";
+   //       } else if (fields[i] === document.querySelector("#city")) {
+   //         message = "La ville est incorrecte !";
+   //       } else {
+   //         message = "L'adresse mail est incorrecte !";
+   //       }
+
+   // let fields = [nom, prenom, email, adresse, ville, codepostal],
+   //        fieldsValidity = [isnomValid,isprenomValid,isemailValid,isadresseValid,
+   //                         isvilleValid,iscodepostalValid,];
+   //        isAFieldInvalid = false;
+
+   // // si tous les champs sont valides
+   // // alors envoie du formulaire
+   // // sinon bloquage et message d'alert
+
+   //       // controle de la validite du prenom
+   //       let validationPrenom = formulaireValues.prenom
+   //     validationPrenom.addEventListener("keyup", function (event) {
+   //       e.preventDefault();
+   //       if (validationPrenom.validity.typeMismatch) {
+   //         validationPrenom.setCustomValidity ("merci de renseigner une adresse mail")
+   //       } else {
+   //         alert(
+   //           "Les chiffres et symboles ne sont pas autorisés\n min 3 caractéres, ne pas dépasser 20 caractéres"
+   //         );
+   //       }
+   //     });
+
+   // }
+   // }
+
+   // a conserver
+
+//   //  ---------------Si le formulaire est validé :evoye donnée
+// let btnenvoyerFormulaire = document.getElementById("confirm-command");
+//  console.log(btnenvoyerFormulaire);
+
+// btnenvoyerFormulaire.addEventListener("click", (e) => {
+//     e.preventDefault();
+//    //recuperation des valeurs du formulaire
+//    let formulaireValues = {
+//      nom: document.getElementById("nom").value,
+//      prenom: document.getElementById("prenom").value,
+//      Email: document.getElementById("email").value,
+//      adresse: document.getElementById("adresse").value,
+//      ville: document.getElementById("ville").value,
+//      codepostal: document.getElementById("code_postal").value,
+//    };
+//    console.log("Valeurs du formulaire :");
+//    console.log(formulaireValues);
+//    ///*******envoyer la requete********/
+
+//    //Mettre l'objet "formulaireValues" dans le LS si tous les champs sont valides
+
+//    // la valeur : formulaireValues : n'est pas une chaine de caractére :
+//    localStorage.setItem("formulaire", JSON.stringify(formulaireValues));
+
+//    // mettre les valeurs du formulaire et les produits selectionnés dans un objet pour envoyer au serveur
+//    let aEnvoyer = {
+//      panier,
+//      formulaireValues,
+//    };
+//    console.log("données à envoyer au serveur:");
+//    console.log(aEnvoyer);
+//  });
+
+
+
+
 
 
 
