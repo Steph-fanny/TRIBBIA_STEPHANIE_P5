@@ -12,7 +12,8 @@
     // 5 : Gestion btn supprimer avec mise à  jour Ls  
     // 6 : Bouton vider le panier 
     // 7 : Gestion des quantites pour ne pas avoir de doublon     
-    // 8: Montant total du panier        
+    // 8 : Montant total du panier     
+    // 9 : le formulaire   
 
     
 //***************************** LOGIQUE ***********************************//  
@@ -85,20 +86,20 @@ function affichagePanier(panier){
     console.log("ligne de produit:");
     console.log(panier[i]);
 
-    let row = document.createElement("tr");
+  let row = document.createElement("tr");
     row.textContent = panier[i].nom;
     row.setAttribute("class", "ligne_produit_panier");
     document.getElementById("liste_produit_panier").appendChild(row);
 
-    //affichage colonne prix
-    let column_price = document.createElement("th");
+  //affichage colonne prix
+  let column_price = document.createElement("th");
     column_price.setAttribute("id", "prix");
     column_price.innerText = panier[i].prix;
     row.appendChild(column_price);
     // console.log(panier[i].prix);
 
-    // affichage prix sans "euros" pour calcul total ligne
-    let price = parseFloat(column_price.innerText.replace("euros", ""));
+  // affichage prix sans "euros" pour calcul total ligne
+  let price = parseFloat(column_price.innerText.replace("euros", ""));
     // console.log(price);
 
     //affichage colonne quantité
@@ -148,12 +149,12 @@ function affichagePanier(panier){
     "Total du panier : " + total_panier.value ;
   
     //enregistrement dans le LS
-    localStorage.setItem("prixtotalpanier", (total_panier.value));    
+    localStorage.setItem("prixtotalpanier", (sommeTotale));    
   } 
 }                                    
 //---------------fin fonction affichage produit panier-------------------//
 
-//------ btn supprimer ligne
+//------ supprimer ligne
   function supprimerUneLigneOurson() {
     let parentTbody = document.getElementsByTagName("tbody");
     // console.log(parentTbody);
@@ -171,75 +172,69 @@ function affichagePanier(panier){
 
 //*******************************FORMULAIRE***************************************//
 //********************************************************************************//
-  // 1. Vérifier si tous les champs sont remplis
-  // 2. Valider chaque champs 
-
-
+ 
 
 ////////////////////////////////// LOGIQUE ///////////////////////////
- 
-let btnenvoyerFormulaire = document.getElementById("confirm-command");
-console.log(btnenvoyerFormulaire);
+// Remplissage du formulaire  :  
+  // - verifier chaque champs : regex
+  // - récupérer les donnees dans le LS
 
-//Au clic du bouton : valider les champs un par un 
-btnenvoyerFormulaire.addEventListener("click", (e) => {
-e.preventDefault();
-validateCodePostal();
-validateVille();
-validateAddress();
-validateEmail();
-validatePrenom();
-validateNom();
+document.getElementById("formulaire_validation").addEventListener("input", function (e) {
+  e.preventDefault();
+  validateCodePostal();
+  validateVille();
+  validateAddress();
+  validateEmail();
+  validatePrenom();
+  validateNom();
 
+  // valeurs à récupérer pour les placer dans le LS
+  let formulaireValues = {
+    nom: document.getElementById("nom").value,
+    prenom: document.getElementById("prenom").value,
+    Email: document.getElementById("email").value,
+    adresse: document.getElementById("adresse").value,
+    ville: document.getElementById("ville").value,
+    codepostal: document.getElementById("code_postal").value,
+  };
+  console.log("Valeurs du formulaire :");
+  console.log(formulaireValues);
 
-// verifierAllFields();
-
- 
-    
-// valeurs à récupérer pour les placer dans le LS
-let formulaireValues = {
-  nom: document.getElementById("nom").value,
-  prenom: document.getElementById("prenom").value,
-  Email: document.getElementById("email").value,
-  adresse: document.getElementById("adresse").value,
-  ville: document.getElementById("ville").value,
-  codepostal: document.getElementById("code_postal").value,
-};
-console.log("Valeurs du formulaire :");
-console.log(formulaireValues);
-
-
-//Mettre l'objet "formulaireValues" dans le LS si tous les champs sont valides
-// la valeur : formulaireValues : n'est pas une chaine de caractére :
+  //Mettre l'objet "formulaireValues" dans le LS si tous les champs sont valides
+  // la valeur : formulaireValues : n'est pas une chaine de caractére :
   localStorage.setItem("formulaire", JSON.stringify(formulaireValues));
-
-
-
 
   // mettre les valeurs du formulaire et les produits selectionnés dans un objet pour envoyer au serveur
   let aEnvoyer = {
-  panier,
-  formulaireValues,
-  }
-  console.log("données à envoyer au serveur:")
+    panier,
+    formulaireValues,
+  };
+  console.log("données à envoyer au serveur:");
   console.log(aEnvoyer);
- });
+});
 
 
 
-
-
-
-
-
-
-   
-    
-///-----------------validation du formulaire------------
+//au clic du bouton : 
+  // - vérifier si tous les champs sont remplis
+  // - envoyer au serveur si toutes les données sont validées : toutes les valeurs doivent etre true 
   
 
-    //***********fonctions********** */
-    //controle avec les expressions régulieres- rationnelle / regex
+let btnenvoyerFormulaire = document.getElementById("confirm-command");
+console.log(btnenvoyerFormulaire);
+
+//Au clic du bouton : 
+btnenvoyerFormulaire.addEventListener("click", (e) => {
+e.preventDefault();
+verifierAllFields();
+});
+
+
+  
+////////////////////////// FONCTIONS /////////////////////
+
+///-----------------validation du formulaire------------
+  //- controle les champs 1 par 1 avec les expressions régulieres- rationnelle / regex
 
 // fonction regex commun pour nom, prenom et ville 
 let regExNomPrenomVille = (value) => {
@@ -251,20 +246,21 @@ let regExEmail = (value) => {
   return /^(([^<()[\]\\.,;:\s@\]+(\.[^<()[\]\\.,;:\s@\]+)*)|(.+))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/
   .test(value);
 }
-
+// message d'erreur pour le remplissage
 let textAlert = (value) =>{    
   return `Le ${value} est incorrect\n Minimun 3 caractéres, maximum 20 !\n  Les chiffres et symboles ne sont pas autorisés!`;
 }
+let textAlertRemplissage = `le formulaire doit etre entierement rempli \n`;
 
-function validateNom() {    
-  let validationNom = document.getElementById("nom").value;
-    if (regExNomPrenomVille(validationNom)) {
+function validateNom() {   
+    let validationNom = document.getElementById("nom").value;
+    if (regExNomPrenomVille(validationNom) && validationNom !== " " ) {      
       document.getElementById("nom").style.border = "2px solid green";
-      console.log("true");
+      console.log("true");     
       return true;
     } else {
       document.getElementById("nom").style.border = "2px solid red";
-      document.getElementById("message").innerText = textAlert("Nom");
+      document.getElementById("message").innerText = textAlertRemplissage + textAlert("Nom");
       console.log("false");
       return false;    
     }
@@ -277,8 +273,9 @@ function validatePrenom() {
     console.log("true");  
     return true;
   } else {
+        
     document.getElementById("prenom").style.border = "2px solid red";
-    document.getElementById("message").innerText = textAlert("Prénom");
+    document.getElementById("message").innerText = textAlertRemplissage + textAlert("Prénom");
     console.log("false");
     return false;       
   }
@@ -292,8 +289,9 @@ function validateVille() {
     return true    
   } else {
     document.getElementById("ville").style.border = "2px solid red";
-    document.getElementById("message").innerText = textAlert("ville");      
-     console.log("false")
+    document.getElementById("message").innerText =
+    textAlertRemplissage + textAlert("ville");      
+    console.log("false")
     return false;    
   }
 }
@@ -306,7 +304,7 @@ function validateEmail() {
     return true;
   } else {
     document.getElementById("email").style.border = "2px solid red";
-    document.getElementById("message").innerText = " L'adresse mail est incorrecte ";
+    document.getElementById("message").innerText = textAlertRemplissage + " L'adresse mail est incorrecte ";
     console.log("false");
     return false;      
   }
@@ -320,7 +318,7 @@ function validateCodePostal() {
   return true;
   } else {
     document.getElementById("code_postal").style.border = "2px solid red";
-    document.getElementById("message").innerText = " Le code postal est incorrect "   
+    document.getElementById("message").innerText = textAlertRemplissage + " Le code postal doit être composée de 5 chiffres "   
     console.log("false"); 
     return false;      
   }
@@ -334,7 +332,7 @@ function validateAddress() {
   return true;
   } else {
     document.getElementById("adresse").style.border = "2px solid red";
-    document.getElementById("message").innerText =
+    document.getElementById("message").innerText = textAlertRemplissage+ 
     " l'adresse est incorrect \n Les chiffres et symboles ne sont pas autorisés "; 
     console.log("false");   
   return false;
@@ -342,47 +340,21 @@ function validateAddress() {
   }
 }
 
-// vérifier si tous les champs sont remplis correctement 
-//  function verifierAllFields() {
-   ////----------------1. verifier si toutes les valeurs sont remplies------
-   // declarer une variable pour chaque champs : initial = false car pas rempli
-   // lors click bouton : soumettre le formulaire si toutes les donnees sont passées true  = rempli et format correct
-   // si 1 non conforme  : pas envoie formulaire
-  //  let nom = false;
-  //  let prenom = false;
-  //  let email = false;
-  //  let adresse = false;
-  //  let code_postal = false;
-  //  let ville = false;
-
-  // //  vérifier si toutes les valeurs ont basculées à true
-  //  if ( nom == true &&  prenom == true &&  email == true && adresse == true &&  code_postal == true &&
-  //    ville == true ) {
-  //    //=> l'ensemble des champs est conforme et le formulaire peut être envoyé
-  //    document.getElementById("message").innerText = "Le formulaire est correctement rempli";
-  //   //  localStorage.setItem("formulaire", JSON.stringify(formulaireValues));
-
-  //    // !!!!!!!!//envoi du formulaire avec post
-  //    // document.getElementById("formulaire").submit();
-  //  } else {
-  //    //sinon message d'erreur
-  //    document.getElementById("message").innerText =
-  //      "Le formulaire n'est pas complet : merci de renseigner tous les élements ";
-  //  }
- 
-  // }
-
-
-
-
-      
-
-
-   
-
-
+// vérifier si tous les champs sont remplis correctement  : toutes les valeurs sont passées à true
+function verifierAllFields() { 
+  if (validateNom() == true &&  validatePrenom() == true &&  validateEmail() == true &&
+    validateAddress() == true && validateCodePostal() == true &&  validateVille() == true
+    ) {
+      // l'ensemble des champs est conforme: envoi du formulaire avec post
+      document.getElementById("formulaire_validation").submit();
+  } else {
+    console.log("tout est ko");
+  //sinon message d'erreur
+    document.getElementById("message").innerText =
+      "Le formulaire n'est pas complet : merci de renseigner tous les élements ";
+  }
   
-   
+}
 
 
 
@@ -391,54 +363,20 @@ function validateAddress() {
 
 
 
-  
-  
-
-
-
-   //******fin fonction ***** */
 
 
 
 
 
 
-   
 
-   // a conserver
 
-//   //  ---------------Si le formulaire est validé :evoye donnée
-// let btnenvoyerFormulaire = document.getElementById("confirm-command");
-//  console.log(btnenvoyerFormulaire);
 
-// btnenvoyerFormulaire.addEventListener("click", (e) => {
-//     e.preventDefault();
-//    //recuperation des valeurs du formulaire
-//    let formulaireValues = {
-//      nom: document.getElementById("nom").value,
-//      prenom: document.getElementById("prenom").value,
-//      Email: document.getElementById("email").value,
-//      adresse: document.getElementById("adresse").value,
-//      ville: document.getElementById("ville").value,
-//      codepostal: document.getElementById("code_postal").value,
-//    };
-//    console.log("Valeurs du formulaire :");
-//    console.log(formulaireValues);
-//    ///*******envoyer la requete********/
 
-//    //Mettre l'objet "formulaireValues" dans le LS si tous les champs sont valides
 
-//    // la valeur : formulaireValues : n'est pas une chaine de caractére :
-//    localStorage.setItem("formulaire", JSON.stringify(formulaireValues));
 
-//    // mettre les valeurs du formulaire et les produits selectionnés dans un objet pour envoyer au serveur
-//    let aEnvoyer = {
-//      panier,
-//      formulaireValues,
-//    };
-//    console.log("données à envoyer au serveur:");
-//    console.log(aEnvoyer);
-//  });
+
+
 
 
 
@@ -457,54 +395,5 @@ function validateAddress() {
 // console.log(donneesLocalStorageObjet);
 
 // document.getElementById("prenom").setAttribute('value', donneesLocalStorageObjet.prenom)
-
-
-
-
-
-
-
-
-
-
-// btnenvoyerFormulaire.addEventListener("click", (e) =>{
-//   e.preventDefault();
-//   //colection d'objet à valider : 5 champs
-//   let fields = document.querySelectorAll("input[required]");
-//   // variable deviendra false si au moins 1 des 5 champs à valider n'est pas valide
-//   let valid = true;
-//   // inspecter les champs 1 par 1 avec 1 boucle avec variable field
-//   // foreach execute 1 fonction pour chacun des éléments stocker dans fields: parametre entree : le
-//   // champ sur lequel on boucle : field
-
-//   //acces 1 par 1 aux champs à valider
-//   fields.forEach((field) => {   
-//     // fonction pour valider le champ
-//     if (!validateField(field)) {
-//       valid = false; // executer quand champ n'est pas valide
-//     }
-//   });
-//   // si  func validatefield retourne true si le champ est valide =>l243= true donc l235 reste true
-//   //car l244 non executé
-// if (valid){ //vérifier si valid est toujours = true 
-// e.target.click
-// }
-
-// }, false);
-
-
-// // fonction valider les champs
-// function validateField (field) {
-//   // retourne soit true  si champ valide (attribut required html) ou false si non valide : va se servir des attriburs required de html
-//   if (field.checkValidity()) {    
-//     return true; // renvoie true à la ligne 240
-//   } else {
-//     return false; // si non valide=> renvoie 1 false à ligne 240
-//   }
-// }
-
-
-
-
 
 

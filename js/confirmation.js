@@ -1,16 +1,38 @@
-let orderId = newURL(location.href).searchParams.get('orderId')
-document.getElementById('commandId').textContent = orderId
+// let commandId = newURL(location.href).searchParams.get("commandId");
+// document.getElementById('commandId').textContent = orderId
 
-function addConfirmationText(){
-    let confirmationId = localStorage.getItem("orderConfirmation");
-    let totalPrice = localStorage.getItem("prixtotalpanier");
-    let confirmation = document.getElementById("Confirmation");
+
+
+let panier = JSON.parse(localStorage.getItem("panier"));
+console.log(panier);
+let prixtotalpanier = JSON.parse(localStorage.getItem("prixtotalpanier"));
+console.log(prixtotalpanier)
+let formulaire = JSON.parse(localStorage.getItem("formulaire"))
+console.log(formulaire);
+
+    
+// Récupération du prix : 
+document.getElementById("commandPrix").textContent = prixtotalpanier + " €"; 
+// console.log(prixtotalpanier);
+
+
+//  affichage du texte de remerciement
+// valeurs à récupérer dans le LS: 
+let nom = formulaire.nom;
+let prenom = formulaire.prenom;
+
+let textRemerciement = (value1 , value2) =>{   
+    return `${value1, value2} , nous vous remercions pour votre commande`}
+
+ let remerciement = document.getElementById("remerciement_commande"); 
+ remerciement.textContent = textRemerciement (nom, prenom);
+    
+console.log(remerciement.textContent);
+
+
+
+
+
+    
+
    
-
-    messageConfirmation.innerText = 
-    "nous vous remercions pour votre commande n° " + confirmationId;
-    confirmationPrice.innerText = 
-    "prix total de votre commande:" + total price + "euros"
-
-    confirmation.appendChild(messageConfirmation)
-    confirmation.appendChild(confirmationPrice)
