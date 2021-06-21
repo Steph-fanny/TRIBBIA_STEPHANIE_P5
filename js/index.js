@@ -1,8 +1,7 @@
-
+//// *******recupération des infos oursons******//
 
 (async function () {
-    const articles = await getArticles()  /*récupération des info ours*/  
-
+    const articles = await getArticles()  
     console.log("articles:")  
     console.log(articles);
 
@@ -11,7 +10,7 @@
         //lancer l'affichage de chaque article          
         displayArticle(article)  
     }
-} )()
+})()
 
 function getArticles(){   
     /*url ou l'on va chercher l'information)*/    
@@ -21,17 +20,16 @@ function getArticles(){
             if(res.ok) {        
                 return res.json();
             }  
-        })       
+    })       
     .then(function(articles) {
             return articles  
-        })
+    })
     .catch(function(error){ 
             alert(error)              /*une erreur est survenue*/
-        })               
+    })               
 }
 
-
-/*affichage de tous les articles*/
+//******affichage de tous les articles********/
 function displayArticle(article){
     // console.log("article:")  
     // console.log(article)  
@@ -46,7 +44,6 @@ function displayArticle(article){
     cloneElt.getElementById("card_link").setAttribute("href", "ourson.html?id="+article._id);
 
     console.log(cloneElt);
-
     document.getElementById("row_articles").appendChild(cloneElt)
 }
 
