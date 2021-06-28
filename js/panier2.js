@@ -60,16 +60,16 @@ for (let i = 0; i <btn_supprimer.length; i++) {
 //6 :----------supprimer tout le panier: -----------------------------------------//
 let btnDeletePanier = document.getElementById("btn_delete_panier");   
   // suprimer la clef produit "panier" du Ls pour vider entiérement le panier    
-  btnDeletePanier.onclick = function viderLePanier() {
-    // removeItem pour vider 1 clef du LS
-    localStorage.removeItem("panier");
-    alert("le panier va être vidé");  
-    // recharger la page
-    window.location.href = "panier.html";           
-    //sauvegarde panier mis à jour
-    localStorage.setItem("panier", json.stringify(panier));
-    window.location.href = "panier.html"; // on revient à la page d'acceuil
-  };    
+btnDeletePanier.onclick = function viderLePanier() {
+  // removeItem pour vider 1 clef du LS
+  localStorage.removeItem("panier");
+  alert("le panier va être vidé");  
+  // recharger la page
+  window.location.href = "panier.html";           
+  //sauvegarde panier mis à jour
+  localStorage.setItem("panier", json.stringify(panier));
+  window.location.href = "panier.html"; // on revient à la page d'acceuil
+};    
    
 
 //************************************* FONCTIONS ********************************//
@@ -88,7 +88,7 @@ function affichagePanier(panier){
 
   let row = document.createElement("tr");
     row.textContent = panier[i].nom;
-    row.setAttribute("class", "ligne_produit_panier");
+    row.setAttribute("class", "ligne_produit_panier ml-4");
     document.getElementById("liste_produit_panier").appendChild(row);
 
   //affichage colonne prix
@@ -105,7 +105,7 @@ function affichagePanier(panier){
     //affichage colonne quantité
     let column_qt = document.createElement("th");
     column_qt.setAttribute("id", "quantite");
-    column_qt.innerText = panier[i].quantité;
+    column_qt.innerText = panier[i].quantité;    
     row.appendChild(column_qt);
     // console.log(panier[i].quantité);
 
@@ -190,12 +190,12 @@ document.getElementById("formulaire_validation").addEventListener("input", funct
 
   // valeurs à récupérer pour les placer dans le LS
   let formulaireValues = {
-    nom: document.getElementById("nom").value,
-    prenom: document.getElementById("prenom").value,
-    Email: document.getElementById("email").value,
-    adresse: document.getElementById("adresse").value,
-    ville: document.getElementById("ville").value,
-    codepostal: document.getElementById("code_postal").value,
+    firstName: document.getElementById("prenom").value,
+    lastName: document.getElementById("nom").value,
+    address: document.getElementById("adresse").value,
+    city: document.getElementById("ville").value,
+    email: document.getElementById("email").value,    
+    // codepostal: document.getElementById("code_postal").value,
   };
   console.log("Valeurs du formulaire :");
   console.log(formulaireValues);
@@ -205,6 +205,15 @@ document.getElementById("formulaire_validation").addEventListener("input", funct
   localStorage.setItem("formulaire", JSON.stringify(formulaireValues));  
 });
 
+// mettre les valeurs du formulaire et les produits selectionnés dans un objet pour envoyer au serveur
+  // let panier = JSON.parse(localStorage.getItem("panier"));
+  // console.log(panier);
+  let prixtotalpanier = JSON.parse(localStorage.getItem("prixtotalpanier"));
+  console.log(prixtotalpanier);
+  let formulaire = JSON.parse(localStorage.getItem("formulaire"));
+  console.log(formulaire);
+     
+  
 //au clic du bouton : 
   // - vérifier si tous les champs sont remplis
   // - envoyer au serveur si toutes les données sont validées : toutes les valeurs doivent etre true 
@@ -244,7 +253,7 @@ function validateNom() {
     let validationNom = document.getElementById("nom").value;
     if (regExNomPrenomVille(validationNom) && validationNom !== " " ) {      
       document.getElementById("nom").style.border = "2px solid green";
-      console.log("true");     
+      console.log("true");       
       return true;
     } else {
       document.getElementById("nom").style.border = "2px solid red";
@@ -331,53 +340,65 @@ function validateAddress() {
 // vérifier si tous les champs sont remplis correctement  : toutes les valeurs sont passées à true
 function verifierAllFields() { 
   if (validateNom() == true &&  validatePrenom() == true &&  validateEmail() == true &&
-    validateAddress() == true && validateCodePostal() == true &&  validateVille() == true
-    ) {
-  // l'ensemble des champs est conforme: envoi du formulaire avec post
-  // mettre les valeurs du formulaire et les produits selectionnés dans un objet pour envoyer au serveur
-    let panier = JSON.parse(localStorage.getItem("panier"));
-    console.log(panier);
-    let prixtotalpanier = JSON.parse(localStorage.getItem("prixtotalpanier"));
-    console.log(prixtotalpanier);
-    let formulaire = JSON.parse(localStorage.getItem("formulaire"));
-    console.log(formulaire);
-     
-  let aEnvoyer={
-  panier,
-  prixtotalpanier,
-  formulaire}
-  console.log("a envoyer au serveur");
-  console.log(aEnvoyer);
-
-// envoie avec POST
-
-fetch("http://localhost:3000/api/teddies/order", {
-  method: "POST",
-  body: JSON.stringify(aEnvoyer), // convertir objet en chaine de caractere
-  headers: {
-    "Content-Type": "application/json",
-  },
-})
-  // .then(function (res) {
-  //   if (res.ok) {
-  //     return res.json.stringify();
-  //   }
-  // })
+      validateAddress() == true && validateCodePostal() == true &&  validateVille() == true
+    ) {     
+    // // mettre les valeurs du formulaire et les produits selectionnés dans un objet pour envoyer au serveur
+        
+    for (let i = 0; i < panier.length; i++) {
+    let products = [];
+    if (panier[i].quantité >= 1){
+    products.push(panier[i]._id)* (panier[i].quantité);
+    }
+    console.log(products)
+    // let products=["5beaa8bf1c9d440000a57d94","5beaa8bf1c9d440000a57d94"];
+   
+    let contact = formulaire;   
+    let aEnvoyer = {
+    contact,
+    products
+    };
+    console.log("a envoyer au serveur");
+    console.log(aEnvoyer);
     
-  // .catch(() => {
-  //   console.log("Erreur")
-  // });
-             
+    // l'ensemble des champs est conforme: envoi du formulaire avec post
+    fetch("http://localhost:3000/api/teddies/order"),{
+      method: "POST",
+      body: JSON.stringify(aEnvoyer), // convertir objet en chaine de caractere
+      headers: {
+        "Content-Type": "application/json",
+      }
+    //   .then(function (response) {
+    //     if (response.ok){
+    //       localStorage.getItem("retourCommande", JSON.stringify(response));
+    //     }else{
+    //       console.log("Erreur")
+    //     }         
+    //   })
+    
+      // .catch(() => {
+      //   console.log("Erreur")
+    
+    
       // document.getElementById("formulaire_validation").submit();
+    }
+  }
 
-    } else {
-    console.log("tout est ko");
-  //sinon message d'erreur
-    document.getElementById("message").innerText =
-      "Le formulaire n'est pas complet : merci de renseigner tous les élements ";
+  } else {
+    console.log("commande non envoyée");
+    //sinon message d'erreur
+    document.getElementById("message").innerText =     
+    "Le formulaire n'est pas complet : merci de renseigner tous les élements ";
   }
   
 }
+
+
+
+
+// lorsque la commande est validée : clear du ls: 
+// localStorage.clear()
+
+
 
 
 

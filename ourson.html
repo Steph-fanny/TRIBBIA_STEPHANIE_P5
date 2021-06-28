@@ -11,7 +11,7 @@
     integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" 
     crossorigin="anonymous"> 
     <link rel="stylesheet" href="style.css"/> 
-      
+
     <title>Description ourson </title>
 </head>
 
@@ -20,7 +20,7 @@
         <div class="container  ">
             <div class="row ">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light w-100 ">
-                    <img src="images/orinoco-logo.png" width="180" height="90" class="rounded float-left" alt="image du logo ORINOCO"/>
+                    <img src="images/orinoco-logo.png" width="180" height="90" class="rounded float-left " alt="image du logo ORINOCO"/>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                       <span class="navbar-toggler-icon"></span>
                     </button>
@@ -44,9 +44,9 @@
     </header>
 
     <section id="descriptionProduit" class="my-3">      
-        <article class="container_page_produit  d-flex flex-column align-items-center"> 
+        <article class="container_page_produit  d-flex flex-column align-items-center "> 
             <!-- <a href="ourson.html" id="card_link" class="card_lien"></a> -->
-            <img id="product_img" width="550" height="350" 
+            <img id="product_img" width="550" height="350" class="my-4 mx-sm-auto "
                 src="" alt="image de l'ours"/>                            
             <h2 id= "product_title" class="my-3">nom ours</h2>
             <p id="product_description">description produit</p>                    
@@ -59,7 +59,7 @@
                 </form>     
                        
                 <form action="" methode="post">
-                    <label for="q">Quantité : </label>
+                    <label for="q" class="font-weight-bold" >Quantité : </label>
                         <select id="qt" name="q">
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -69,22 +69,22 @@
                 </form>                                
 
                 <p id= "product_price"></p>   
-                <a class="btn btn-primary"id="bouton" href="" role="button">Ajouter au panier</a>                     
+                <a class="btn btn-primary mb-4 align-middle"id="bouton" href="" role="button">Ajouter au panier</a>                     
         </article>  
     </section>    
 
-    <footer class ="container bg-dark py-3   d-flex ">
-        <div class="row w-100" >
-            <div class ="col-6 col-md-12 col  d-flex justify-content-md-center  w-100">
-                <ul class="list-inline text-left text-md-center my-0 ">
-                    <li class="list-inline-item px-4 py-3"><a class="py-3 px-2 h-100 W-auto" href="#">A propos</a></li>
-                    <li class="list-inline-item px-4"><a href="#">Données et confidentialité</a></li>
-                    <li class="list-inline-item px-4"><a href="#">Mentions légales</a></li>
-                    <li class="list-inline-item px-4"><a href="#">Fonctionnement du site</a></li>
-                    <li class="list-inline-item px-4"><a href="mailto:contact@orinoco.com">Contactez-nous</a></li>
-                 </ul>
-            </div>
-        </div>        
+    <footer class ="container bg-dark py-3 d-flex ">
+            <div class="row w-100" >
+                <div class ="col-6 col-md-12 col  d-flex justify-content-md-center  w-100">
+                    <ul class="list-inline text-left text-md-center my-0 ">
+                        <li class="list-inline-item px-4 py-3"><a class="py-3 px-2 h-100 W-auto" href="#">A propos</a></li>
+                        <li class="list-inline-item px-4"><a href="#">Données et confidentialité</a></li>
+                        <li class="list-inline-item px-4"><a href="#">Mentions légales</a></li>
+                        <li class="list-inline-item px-4"><a href="#">Fonctionnement du site</a></li>
+                        <li class="list-inline-item px-4"><a href="mailto:contact@orinoco.com">Contactez-nous</a></li>
+                    </ul>
+                </div>
+            </div>        
     </footer>
         
     <!--script javaScript-->

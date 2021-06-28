@@ -1,3 +1,15 @@
+// ETAPES/
+  // 1: Récupération des informations de l'ourson selectionné : par son id
+  // 2: Affichage des options de l'article selectioné : couleurs
+  // 3: Validation de l'article au click du bouton
+  // 4: Local storage
+
+
+
+
+//***************************** LOGIQUE ***********************************//  
+//*************************************************************************//
+
 // console.log(document.location.href)
 let url = new URL(document.location.href);
 // console.log(url)
@@ -5,13 +17,18 @@ let ourson_id = url.searchParams.get("id");
 // console.log(id_ourson);
 let address = url.searchParams.get("address");
 
+
+//***************************** FONCTIONS ***********************************//  
+//*************************************************************************//
+
+//****Fonction principale qui execute la fonction getProductData  
 (async function () {    
-  let productData = await getProductData(ourson_id)  /*récupération des info ours*/  
+  let productData = await getProductData(ourson_id)  
   // console.log("Données produit:")
   // console.table(productData)
 } )()
      
-// fonction pour récupérer les données du produit, en paramétre ID du produit
+//**** Fonction pour récupérer les données du produit, en paramétre ID du produit
 function getProductData (ourson_id){
   // requete vers l'API du serveur
     return fetch("http://localhost:3000/api/teddies/"+ ourson_id)
@@ -41,11 +58,11 @@ function getProductData (ourson_id){
       })   
     }
                   
-// Validation du panier au click//
+// Validation de l'article :au click//
 bouton.onclick = () => {
   // création objet//
   teddyChoice = {
-    id: ourson_id,
+    _id: ourson_id,
     nom: product_title.textContent,
     prix: product_price.textContent,
     quantité: qt.value,
@@ -105,8 +122,7 @@ function gestionDoublons(panier, teddyChoice) {
   for (let i = 0; i < panier.length; i++) {
   // si l'on trouve le meme id et la même couleur : on rajoute les quantites de teddychoice à l'ourson déja présent
   if (
-    teddyChoice.id == panier[i].id &&
-    teddyChoice.colors == panier[i].colors
+    teddyChoice._id == panier[i]._id && teddyChoice.colors == panier[i].colors
   ) {
     doublonExiste = true;
     console.log("doublon trouvé :");
