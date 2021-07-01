@@ -14,6 +14,10 @@
     // 7 : Gestion des quantites pour ne pas avoir de doublon     
     // 8 : Montant total du panier     
     // 9 : le formulaire   
+      // 9.1 : validation de chaque champ avec un regex
+      // 9.2 : vérification que tous les champs soient remplis
+      // 9.3 : mettre les valeurs dans le LS
+      // 9.4 : si toutes les conditions sont remplis : envoie du formulaire au serveur
 
     
 //***************************** LOGIQUE ***********************************//  
@@ -60,21 +64,15 @@ for (let i = 0; i <btn_supprimer.length; i++) {
 //6 :----------supprimer tout le panier: -----------------------------------------//
 let btnDeletePanier = document.getElementById("btn_delete_panier");   
   // suprimer la clef produit "panier" du Ls pour vider entiérement le panier    
-btnDeletePanier.onclick = function viderLePanier() {
-  // removeItem pour vider 1 clef du LS
-  localStorage.removeItem("panier");
-  alert("le panier va être vidé");  
-  // recharger la page
-  window.location.href = "panier.html";           
-  //sauvegarde panier mis à jour
-  localStorage.setItem("panier", json.stringify(panier));
-  window.location.href = "panier.html"; // on revient à la page d'acceuil
-};    
-   
-
+btnDeletePanier.addEventListener ("click", (event)=>{
+    event.preventDefault();
+    //fonction bouton vider le panier//
+    viderLePanier()
+})
+     
 //************************************* FONCTIONS ********************************//
 //*******************************************************************************//
-
+    
 //------- affichage message "panier vide"
 function affichagePanierVide() {
   window.alert("Votre panier est vide");
@@ -167,13 +165,19 @@ function affichagePanier(panier){
   }
 //-----fin fonction btn supprimer ligne 
 
-
-
+function viderLePanier() {
+  // removeItem pour vider 1 clef du LS
+  localStorage.removeItem("panier");
+  alert("le panier va être vidé");  
+  // recharger la page
+  window.location.href = "index.html";           
+  //sauvegarde panier mis à jour
+  localStorage.setItem("panier", json.stringify(panier)); 
+};
 
 //*******************************FORMULAIRE***************************************//
 //********************************************************************************//
  
-
 ////////////////////////////////// LOGIQUE ///////////////////////////
 // Remplissage du formulaire  :  
   // - verifier chaque champs : regex
@@ -224,8 +228,7 @@ console.log(btnenvoyerFormulaire);
 //Au clic du bouton : 
 btnenvoyerFormulaire.addEventListener("click", (e) => {
   e.preventDefault();
-  verifierAllFields();
-  
+  verifierAllFields();  
 })
   
 ////////////////////////// FONCTIONS /////////////////////
@@ -344,53 +347,56 @@ function verifierAllFields() {
     ) {     
     // // mettre les valeurs du formulaire et les produits selectionnés dans un objet pour envoyer au serveur
         
-    for (let i = 0; i < panier.length; i++) {
     let products = [];
-    if (panier[i].quantité >= 1){
-    products.push(panier[i]._id)* (panier[i].quantité);
+    for (let i = 0; i < panier.length; i++) {      
+      if (panier[i].quantité >= 1){ 
+        products.push(panier[i]._id)* (panier[i].quantité);
+      }
     }
     console.log(products)
-    // let products=["5beaa8bf1c9d440000a57d94","5beaa8bf1c9d440000a57d94"];
+    //  products=["5beaa8bf1c9d440000a57d94","5beaa8bf1c9d440000a57d94"];
    
     let contact = formulaire;   
     let aEnvoyer = {
-    contact,
-    products
+      contact,
+      products
     };
     console.log("a envoyer au serveur");
     console.log(aEnvoyer);
     
     // l'ensemble des champs est conforme: envoi du formulaire avec post
-    fetch("http://localhost:3000/api/teddies/order"),{
+    fetch("http://localhost:3000/api/teddies/order", {
       method: "POST",
       body: JSON.stringify(aEnvoyer), // convertir objet en chaine de caractere
       headers: {
         "Content-Type": "application/json",
-      }
-    //   .then(function (response) {
-    //     if (response.ok){
-    //       localStorage.getItem("retourCommande", JSON.stringify(response));
-    //     }else{
-    //       console.log("Erreur")
-    //     }         
-    //   })
-    
-      // .catch(() => {
-      //   console.log("Erreur")
-    
-    
-      // document.getElementById("formulaire_validation").submit();
-    }
-  }
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then(r => {
+         console.log(r.contact);
+        console.log(r.orderId);
+        localStorage.setItem("retourCommande", JSON.stringify(r.orderId));
+        window.location.replace("confirmation.html");
+      })
+      
 
+      .catch(() => {
+        console.log("Erreur");
+
+        // document.getElementById("formulaire_validation").submit();
+      });
+  
   } else {
     console.log("commande non envoyée");
     //sinon message d'erreur
     document.getElementById("message").innerText =     
     "Le formulaire n'est pas complet : merci de renseigner tous les élements ";
   }
-  
 }
+
 
 
 
