@@ -229,6 +229,7 @@ console.log(btnenvoyerFormulaire);
 btnenvoyerFormulaire.addEventListener("click", (e) => {
   e.preventDefault();
   verifierAllFields();  
+  ;  
 })
   
 ////////////////////////// FONCTIONS /////////////////////
@@ -344,52 +345,51 @@ function validateAddress() {
 function verifierAllFields() { 
   if (validateNom() == true &&  validatePrenom() == true &&  validateEmail() == true &&
       validateAddress() == true && validateCodePostal() == true &&  validateVille() == true
-    ) {     
-    // // mettre les valeurs du formulaire et les produits selectionnés dans un objet pour envoyer au serveur
-        
-    let products = [];
-    for (let i = 0; i < panier.length; i++) {      
-      if (panier[i].quantité >= 1){ 
-        products.push(panier[i]._id)* (panier[i].quantité);
+    ) {
+      // // mettre les valeurs du formulaire et les produits selectionnés dans un objet pour envoyer au serveur
+
+      let products = [];
+      for (let i = 0; i < panier.length; i++) {
+        if (panier[i].quantité >= 1) {
+          products.push(panier[i]._id) * panier[i].quantité;
+        }
       }
-    }
-    console.log(products)
-    //  products=["5beaa8bf1c9d440000a57d94","5beaa8bf1c9d440000a57d94"];
-   
-    let contact = formulaire;   
-    let aEnvoyer = {
-      contact,
-      products
-    };
-    console.log("a envoyer au serveur");
-    console.log(aEnvoyer);
-    
-    // l'ensemble des champs est conforme: envoi du formulaire avec post
-    fetch("http://localhost:3000/api/teddies/order", {
-      method: "POST",
-      body: JSON.stringify(aEnvoyer), // convertir objet en chaine de caractere
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then(r => {
-         console.log(r.contact);
-        console.log(r.orderId);
-        localStorage.setItem("retourCommande", JSON.stringify(r.orderId));
-        window.location.replace("confirmation.html");
-      })
-      
+      console.log(products);
 
-      .catch(() => {
-        console.log("Erreur");
+      let contact = formulaire;
+      let aEnvoyer = {
+        contact,
+        products,
+      };
+      console.log("a envoyer au serveur");
+      console.log(aEnvoyer);
+     
+      // l'ensemble des champs est conforme: envoi du formulaire avec post
+      fetch("http://localhost:3000/api/teddies/order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(aEnvoyer), // convertir objet en chaine de caractere        
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((r) => {
+          // console.log(r);
+          // console.log(r.contact);
+          // console.log(r.orderId);
+          localStorage.setItem("retourCommande",JSON.stringify(r.orderId));
+          window.location.replace("confirmation.html");
+        })
 
-        // document.getElementById("formulaire_validation").submit();
-      });
-  
-  } else {
+        .catch((err) => {
+          console.log("Erreur");
+        });
+       
+
+      // // document.getElementById("formulaire_validation").submit();
+    }else {
     console.log("commande non envoyée");
     //sinon message d'erreur
     document.getElementById("message").innerText =     
@@ -401,8 +401,6 @@ function verifierAllFields() {
 
 
 
-// lorsque la commande est validée : clear du ls: 
-// localStorage.clear()
 
 
 

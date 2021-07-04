@@ -5,7 +5,6 @@
 // 3 : Affichage du texte de remerciement 
 // 4 : sinon : affichage du panier
 
-
 //récupération des données du LS
 let panier = JSON.parse(localStorage.getItem("panier"));
 console.log(panier);
@@ -13,21 +12,20 @@ let prixtotalpanier = JSON.parse(localStorage.getItem("prixtotalpanier"));
 console.log(prixtotalpanier);
 let formulaire = JSON.parse(localStorage.getItem("formulaire"));
 console.log(formulaire);
-let order = JSON.parse(localStorage.getItem("retourCommande"));
-
-
-// let order= json.parse(localStorage.getItem("order"))
-
-// récupération de l'order iD du server//
-document.getElementById("commandId").textContent = order;
-
+// recuperation de l'ID
+let order = localStorage.getItem("retourCommande")
+console.log(order)
+JSON.parse(order)
+document.getElementById("commandId").innerHTML = order;
 
 // ****affichage du texte de remerciement (3)
+
 // valeurs à récupérer dans le LS:
 let nom = formulaire.lastName;
 console.log(nom);
 let prenom = formulaire.firstName;
 console.log(prenom);
+
 // texte de remerciement avec nom et prenom 
 let textRemerciement = (value1, value2) => {
   return `${value1} ${value2} , nous vous remercions pour votre commande`;
@@ -47,10 +45,6 @@ document.getElementById("commandPrix").textContent = prixtotalpanier + " €";
 // console.log(prixtotalpanier);
 
 
-
-// lors du clic du retour à l 'acceuil = '
-// lorsque la commande est validée : clear du ls: 
-// localStorage.clear()
 
 
 
