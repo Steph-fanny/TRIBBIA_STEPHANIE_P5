@@ -356,11 +356,18 @@ function verifierAllFields() {
       }
       console.log(products);
 
-      let contact = formulaire;
+      let contact = {      
+      firstName: document.getElementById("prenom").value,
+      lastName: document.getElementById("nom").value,
+      address: document.getElementById("adresse").value,
+      city: document.getElementById("ville").value,
+      email: document.getElementById("email").value,  
+      };
+
       let aEnvoyer = {
         contact,
         products,
-      };
+        };
       console.log("a envoyer au serveur");
       console.log(aEnvoyer);
      
