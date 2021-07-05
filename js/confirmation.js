@@ -44,7 +44,8 @@ document.getElementById("adresse_livraison").textContent =
 document.getElementById("commandPrix").textContent = prixtotalpanier + " €";
 // console.log(prixtotalpanier);
 
-
+// lorsque la commande est validée : clear du ls: 
+localStorage.clear()
 
 
 
