@@ -239,8 +239,11 @@ btnenvoyerFormulaire.addEventListener("click", (e) => {
 
 // fonction regex commun pour nom, prenom et ville 
 let regExNomPrenomVille = (value) => {
-  //commencer par 1 lettre en maj ou min +  3 lettres min/ max 20  
-  return /^[A-Za-z]{3,20}$/.test(value);
+  //commencer par 1 lettre en maj ou min +  3 lettres min/ max 20
+  return /^[a-zA-Z\u0080-\u024F\s\/\-\)\(\`\.\"\']+$/.test(value);
+  // sans espace  
+  //return /^[A-Za-z]{3,20}$/.test(value) 
+ 
 };
 
 let regExEmail = (value) => {
